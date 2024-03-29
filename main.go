@@ -187,7 +187,12 @@ func main() {
       errCount++
       continue
     }
-    rows := master.Parse(dbFile, entry.StrLabelCrc, &ins)
+    rows, err := master.Parse(dbFile, entry.StrLabelCrc, &ins)
+    if err != nil {
+      rich.Error("An error occurred when parsing database.")
+      rich.Error(err.Error())
+      continue
+    }
     // marshal catalog to a yaml file
     utils.WriteToYamlFile(rows, dbSaveDir+"/"+reflect.TypeOf(ins).Name()+".yaml")
   }

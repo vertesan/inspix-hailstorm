@@ -22,7 +22,10 @@ func Convert2Json(catalog *manifest.Catalog, dbSaveDir, srcDir string) {
     }
     // hand a instance to master.Parse so the compiler can do the inference
     ins := MasterMap[entry.StrLabelCrc]
-    rows := Parse(dbFile, entry.StrLabelCrc, &ins)
+    rows, err := Parse(dbFile, entry.StrLabelCrc, &ins)
+    if err != nil {
+      panic(err)
+    }
     // marshal catalog to a json file
     utils.WriteToJsonFile(rows, dbSaveDir+"/"+reflect.TypeOf(ins).Name()+".json")
   }

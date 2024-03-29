@@ -1,18 +1,19 @@
 package master
 
 import (
-  "bufio"
-  "encoding/binary"
-  "io"
-  "reflect"
-  "time"
-  "unsafe"
+	"bufio"
+	"encoding/binary"
+	"errors"
+	"io"
+	"reflect"
+	"time"
+	"unsafe"
 
-  "vertesan/hailstorm/rich"
-  "vertesan/hailstorm/utils"
+	"vertesan/hailstorm/rich"
+	"vertesan/hailstorm/utils"
 )
 
-func Parse[T any](src io.Reader, label string, instance *T) []T {
+func Parse[T any](src io.Reader, label string, instance *T) ([]T, error) {
   bufr := bufio.NewReader(src)
 
   buf := make([]byte, 2)
@@ -36,7 +37,7 @@ func Parse[T any](src io.Reader, label string, instance *T) []T {
   }
   if rowNum < 1 {
     rich.Info("Database file %q has 0 rows.", label)
-    return nil
+    return nil, errors.New("No rows error")
   }
 
   // vlq: numFields
@@ -46,13 +47,15 @@ func Parse[T any](src io.Reader, label string, instance *T) []T {
   }
   if fieldNum < 1 {
     rich.Warning("Table %q has no fields.", label)
-    return nil
+    return nil, errors.New("No fields error")
   }
   stNum := uint64(reflect.TypeOf(*instance).NumField())
   if stNum < fieldNum {
     rich.Warning("Incoming table %q has %d fields, but struct has %d fields. Perhaps the DB structure was changed.", label, fieldNum, stNum)
-    rich.Warning("struct fields num %d will be used to avoid 'IndexOutOfBound' panic.", stNum)
-    fieldNum = stNum
+    // rich.Warning("struct fields num %d will be used to avoid 'IndexOutOfBound' panic.", stNum)
+    // fieldNum = stNum
+    rich.Warning("Will be skipping parsing this DB to avoid unexcepted errors")
+    return nil, errors.New("Fields num mismatch errors")
   }
 
   var fieldNames []uint32
@@ -112,7 +115,7 @@ func Parse[T any](src io.Reader, label string, instance *T) []T {
     // rich.PanicError("Except io.EOF but redundant bytes are detected during parsing tsv: %q.", err, label)
   }
   rich.Info("Database file %q was successfully parsed.", label)
-  return results
+  return results, nil
 }
 
 func read1Cell[T any](instance *T, r *bufio.Reader, field string, givenType uint32) {
