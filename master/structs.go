@@ -27,12 +27,14 @@ type AdvSeries struct {
   Description string `yaml:"Description"`
   StartTime time.Time `yaml:"StartTime"`
   EndTime time.Time `yaml:"EndTime"`
+  FiscalYearDisplay int `yaml:"FiscalYearDisplay"`
 }
 
 type AdvStoryDigestMovies struct {
   Id int `yaml:"Id"`
   Title string `yaml:"Title"`
   OrderId int `yaml:"OrderId"`
+  DigestFiscalYearDisplay int `yaml:"DigestFiscalYearDisplay"`
 }
 
 type BeginnerMissionBannerRewards struct {
@@ -422,6 +424,14 @@ type DreamLiveReleaseConditions struct {
   EndTime time.Time `yaml:"EndTime"`
 }
 
+type DreamLiveSeriesList struct {
+  Id int `yaml:"Id"`
+  DisplayPosition int `yaml:"DisplayPosition"`
+  ImageId int `yaml:"ImageId"`
+  StartTime time.Time `yaml:"StartTime"`
+  EndTime time.Time `yaml:"EndTime"`
+}
+
 type DreamQuestSeries struct {
   Id int `yaml:"Id"`
   CharactersId int `yaml:"CharactersId"`
@@ -429,6 +439,7 @@ type DreamQuestSeries struct {
   OrderId int `yaml:"OrderId"`
   StartTime time.Time `yaml:"StartTime"`
   EndTime time.Time `yaml:"EndTime"`
+  DreamLiveSeriesListId int `yaml:"DreamLiveSeriesListId"`
 }
 
 type DreamQuestStages struct {
@@ -552,6 +563,8 @@ type ExchangePointRate struct {
   LimitedCount int `yaml:"LimitedCount"`
   StartTime time.Time `yaml:"StartTime"`
   EndTime time.Time `yaml:"EndTime"`
+  GachaSeriesId int `yaml:"GachaSeriesId"`
+  BonusItemQuantity int `yaml:"BonusItemQuantity"`
 }
 
 type FlowerStandColors struct {
@@ -659,6 +672,163 @@ type GiftlessGachas struct {
   LimitedPaidGachaResetType int `yaml:"LimitedPaidGachaResetType"`
   LimitedPaidButtonDesignType int `yaml:"LimitedPaidButtonDesignType"`
   MiniBannerPopId int `yaml:"MiniBannerPopId"`
+}
+
+type GradeAddSkillEffectDetails struct {
+  Id int64 `yaml:"Id"`
+  SkillEffectDetailType string `yaml:"SkillEffectDetailType"`
+  TargetMood int `yaml:"TargetMood"`
+  EffectValue int64 `yaml:"EffectValue"`
+}
+
+type GradeAddSkillEffects struct {
+  Id int64 `yaml:"Id"`
+  ActionType int `yaml:"ActionType"`
+  OrderId int `yaml:"OrderId"`
+}
+
+type GradeAddSkills struct {
+  Id int64 `yaml:"Id"`
+  Name string `yaml:"Name"`
+  Description string `yaml:"Description"`
+  SkillIcon int `yaml:"SkillIcon"`
+  GradeAddSkillEffectsId string `yaml:"GradeAddSkillEffectsId"`
+  OrderId int `yaml:"OrderId"`
+}
+
+type GradeDatas struct {
+  Id int `yaml:"Id"`
+  GradeNum int `yaml:"GradeNum"`
+  GradeId int `yaml:"GradeId"`
+  GradeTier int `yaml:"GradeTier"`
+  RequireGradePoints int `yaml:"RequireGradePoints"`
+  GradeLiveBonus int `yaml:"GradeLiveBonus"`
+}
+
+type GradeQuestLivePointBonus struct {
+  Id int `yaml:"Id"`
+  GradeQuestSeriesId int `yaml:"GradeQuestSeriesId"`
+  OrderId int `yaml:"OrderId"`
+  Description string `yaml:"Description"`
+  ConditionsType int `yaml:"ConditionsType"`
+  ConditionsValue int `yaml:"ConditionsValue"`
+  BonusNum int `yaml:"BonusNum"`
+  BonusLimitUp int `yaml:"BonusLimitUp"`
+}
+
+type GradeQuestRewardsDatas struct {
+  Id int64 `yaml:"Id"`
+  GradeQuestRewardsId int `yaml:"GradeQuestRewardsId"`
+  RewardType int `yaml:"RewardType"`
+  RewardItemId int `yaml:"RewardItemId"`
+  RewardNum int `yaml:"RewardNum"`
+}
+
+type GradeQuestRewards struct {
+  Id int `yaml:"Id"`
+  GradeQuestSeriesId int `yaml:"GradeQuestSeriesId"`
+  OrderId int `yaml:"OrderId"`
+  ConditionsType int `yaml:"ConditionsType"`
+  ConditionsValue int `yaml:"ConditionsValue"`
+  ConditionsValue2 int `yaml:"ConditionsValue2"`
+  ConditionsDescription string `yaml:"ConditionsDescription"`
+  DisplayType int `yaml:"DisplayType"`
+}
+
+type GradeQuestSeason struct {
+  Id int `yaml:"Id"`
+  Name string `yaml:"Name"`
+  OrderId int `yaml:"OrderId"`
+  Generation int `yaml:"Generation"`
+  Season int `yaml:"Season"`
+  StartTime time.Time `yaml:"StartTime"`
+  EndTime time.Time `yaml:"EndTime"`
+}
+
+type GradeQuestSeasonReleaseCond struct {
+  Id int `yaml:"Id"`
+  GradeQuestSeasonId int `yaml:"GradeQuestSeasonId"`
+  ConditionsType int `yaml:"ConditionsType"`
+  ConditionsValue int `yaml:"ConditionsValue"`
+  ConditionsDescription string `yaml:"ConditionsDescription"`
+  StartTime time.Time `yaml:"StartTime"`
+  EndTime time.Time `yaml:"EndTime"`
+}
+
+type GradeQuestSeries struct {
+  Id int `yaml:"Id"`
+  Name string `yaml:"Name"`
+  GradeQuestSeasonId int `yaml:"GradeQuestSeasonId"`
+  OrderId int `yaml:"OrderId"`
+  BackGroundId int `yaml:"BackGroundId"`
+  MapImageId string `yaml:"MapImageId"`
+  SoundId int `yaml:"SoundId"`
+  IsTutorial int `yaml:"IsTutorial"`
+  DefaultGradeAddSkillsId string `yaml:"DefaultGradeAddSkillsId"`
+  DefaultActionPoint int `yaml:"DefaultActionPoint"`
+  LivePointBonusLimit int `yaml:"LivePointBonusLimit"`
+  StartTime time.Time `yaml:"StartTime"`
+  EndTime time.Time `yaml:"EndTime"`
+}
+
+type GradeQuestSeriesReleaseCond struct {
+  Id int `yaml:"Id"`
+  GradeQuestSeriesId int `yaml:"GradeQuestSeriesId"`
+  ConditionsType int `yaml:"ConditionsType"`
+  ConditionsValue int `yaml:"ConditionsValue"`
+  StartTime time.Time `yaml:"StartTime"`
+  EndTime time.Time `yaml:"EndTime"`
+}
+
+type GradeQuestSquareDatas struct {
+  Id int `yaml:"Id"`
+  Name string `yaml:"Name"`
+  SquareType int `yaml:"SquareType"`
+  TargetId int64 `yaml:"TargetId"`
+  MinActionPoint int `yaml:"MinActionPoint"`
+  MaxActionPoint int `yaml:"MaxActionPoint"`
+}
+
+type GradeQuestSquare struct {
+  Id int `yaml:"Id"`
+  GradeQuestSeriesId int `yaml:"GradeQuestSeriesId"`
+  SquareId int `yaml:"SquareId"`
+  XCoord int `yaml:"XCoord"`
+  YCoord int `yaml:"YCoord"`
+  OpenGradeQuestSquareIds string `yaml:"OpenGradeQuestSquareIds"`
+}
+
+type GradeQuestStages struct {
+  Id int `yaml:"Id"`
+  Name string `yaml:"Name"`
+  Description string `yaml:"Description"`
+  Hint string `yaml:"Hint"`
+  StageType int `yaml:"StageType"`
+  LiveStagesId int `yaml:"LiveStagesId"`
+  QuestMusicsType int `yaml:"QuestMusicsType"`
+  QuestMusicsDetail int `yaml:"QuestMusicsDetail"`
+  DeckRestrictedType int `yaml:"DeckRestrictedType"`
+  DeckRestrictedDetail int `yaml:"DeckRestrictedDetail"`
+  LivePoint int64 `yaml:"LivePoint"`
+}
+
+type Grade struct {
+  Id int `yaml:"Id"`
+  Name string `yaml:"Name"`
+  MaxGradeTier int `yaml:"MaxGradeTier"`
+}
+
+type GradeRewardDatas struct {
+  Id int `yaml:"Id"`
+  GradeRewardsId int `yaml:"GradeRewardsId"`
+  RewardType int `yaml:"RewardType"`
+  RewardItemId int `yaml:"RewardItemId"`
+  RewardNum int `yaml:"RewardNum"`
+}
+
+type GradeRewards struct {
+  Id int `yaml:"Id"`
+  GradeNum int `yaml:"GradeNum"`
 }
 
 type GrandPrixPointBonuses struct {
@@ -1029,6 +1199,7 @@ type Musics struct {
   ReleaseConditionText string `yaml:"ReleaseConditionText"`
   StartTime time.Time `yaml:"StartTime"`
   EndTime time.Time `yaml:"EndTime"`
+  MaxAp int `yaml:"MaxAp"`
 }
 
 type PetalCoinExchangeRate struct {
@@ -1206,6 +1377,32 @@ type SeasonFanLevels struct {
   SeasonFanLevel int `yaml:"SeasonFanLevel"`
   Experience int `yaml:"Experience"`
   CumulativeExperience int `yaml:"CumulativeExperience"`
+}
+
+type SeasonGrade struct {
+  Id int `yaml:"Id"`
+  Description string `yaml:"Description"`
+  PersonalRankingTabs string `yaml:"PersonalRankingTabs"`
+  CountStartTime time.Time `yaml:"CountStartTime"`
+  CountEndTime time.Time `yaml:"CountEndTime"`
+  DisplayStartTime time.Time `yaml:"DisplayStartTime"`
+  DisplayEndTime time.Time `yaml:"DisplayEndTime"`
+}
+
+type SeasonGradeRewardDatas struct {
+  Id int64 `yaml:"Id"`
+  SeasonGradeRewardsId int `yaml:"SeasonGradeRewardsId"`
+  RewardType int `yaml:"RewardType"`
+  RewardItemId int `yaml:"RewardItemId"`
+  RewardNum int `yaml:"RewardNum"`
+  IsEmphasize int `yaml:"IsEmphasize"`
+}
+
+type SeasonGradeRewards struct {
+  Id int `yaml:"Id"`
+  SeasonGradeId int `yaml:"SeasonGradeId"`
+  MinTargetNum int `yaml:"MinTargetNum"`
+  MaxTargetNum int `yaml:"MaxTargetNum"`
 }
 
 type Seasons struct {
