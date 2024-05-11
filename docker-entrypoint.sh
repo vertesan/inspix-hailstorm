@@ -19,7 +19,7 @@ fi
 
 if [ -f $UPDATE_FLAG ]; then 
   git config --global user.name vts-server
-  git config --global user.email vts-server@e.mail
+  git config --global user.email 162897218+vertesan@users.noreply.github.com
   git config --global core.sshCommand "ssh -o IdentitiesOnly=yes -o StrictHostKeyChecking=no -i $SSH_KEY_PATH -F /dev/null"
   echo "Cloning from remote repository..."
   git clone $REPO_URI $REPO_NAME
