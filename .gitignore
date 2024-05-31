@@ -27,3 +27,4 @@ masterdata/
 masterdataYaml/
 hailstorm
 secrets/
+.vscode
