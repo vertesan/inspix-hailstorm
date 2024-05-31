@@ -1,7 +1,6 @@
 #!/bin/bash
 set -euo pipefail
 REPO_NAME=repo
-# REPO_URI='git@github.com:vertesan/privtest.git'
 SSH_KEY_PATH='/app/secrets/key'
 UPDATE_FLAG='cache/updated'
 
