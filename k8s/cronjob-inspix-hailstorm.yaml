@@ -1,0 +1,131 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: inspix-hailstorm-cronjob
+  namespace: default
+  labels:
+    type: workloads
+spec:
+  schedule: "1 * * * *"
+  concurrencyPolicy: Forbid
+  startingDeadlineSeconds: 300
+  failedJobsHistoryLimit: 3
+  successfulJobsHistoryLimit: 3
+  jobTemplate:
+    metadata:
+      name: inspix-hailstorm-job
+    spec:
+      backoffLimit: 3
+      # ttlSecondsAfterFinished: 216000
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - image: ghcr.io/vertesan/inspix-hailstorm:latest
+              name: inspix-hailstorm
+              env:
+              - name: REPO_URI
+                value: "git@github.com:vertesan/link-like-diff.git"
+              volumeMounts:
+                - name: hailstorm-cache
+                  mountPath: /app/cache
+                - name: hailstorm-masterdata
+                  mountPath: /app/masterdata
+                - name: vtx-git-sshkey
+                  mountPath: /app/secrets
+                  readOnly: true
+              resources:
+                requests:
+                  memory: 256Mi
+                  cpu: 100m
+                limits:
+                  memory: 256Mi
+                  cpu: 100m
+          volumes:
+            - name: hailstorm-cache
+              persistentVolumeClaim:
+                claimName: inspix-pvc-cache
+            - name: hailstorm-masterdata
+              persistentVolumeClaim:
+                claimName: inspix-pvc-masterdata
+            - name: vtx-git-sshkey
+              secret:
+                secretName: inspix-vts-git-sshkey
+                defaultMode: 0400
+                optional: false
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: inspix-pvc-masterdata
+  namespace: default
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Mi
+  storageClassName: inspix-sc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: inspix-pvc-cache
+  namespace: default
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+  storageClassName: inspix-sc
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: inspix-inspector
+  labels:
+    app: inspix-inspector
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: pod-inspix-inspector
+  template:
+    metadata:
+      labels:
+        app: pod-inspix-inspector
+    spec:
+      restartPolicy: Always
+      containers:
+        - image: alpine
+          name: pod-inspix-inspector
+          command: ["tail"]
+          args: ["-f", "/dev/null"]
+          volumeMounts:
+            - name: hailstorm-cache
+              mountPath: /app/cache
+            - name: hailstorm-masterdata
+              mountPath: /app/masterdata
+            - name: vtx-git-sshkey
+              mountPath: /app/secrets
+              readOnly: true
+          resources:
+            requests:
+              memory: 256Mi
+              cpu: 100m
+            limits:
+              memory: 256Mi
+              cpu: 100m
+      volumes:
+        - name: hailstorm-cache
+          persistentVolumeClaim:
+            claimName: inspix-pvc-cache
+        - name: hailstorm-masterdata
+          persistentVolumeClaim:
+            claimName: inspix-pvc-masterdata
+        - name: vtx-git-sshkey
+          secret:
+            secretName: inspix-vts-git-sshkey
+            defaultMode: 0400
+            optional: false
