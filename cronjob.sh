@@ -11,6 +11,8 @@ set -euo pipefail
 REPO_NAME=diff_repo
 UPDATE_FLAG='cache/updated'
 
+. .env.local
+
 if [ ! -v REPO_NAME ]; then
   echo "REPO_NAME is not set, will be stopping process..."
   exit 167

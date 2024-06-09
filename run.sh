@@ -1,5 +1,9 @@
-docker run -it --rm \
-  -v `pwd`/secrets:/app/secrets:ro \
-  -v `pwd`/cache:/app/cache \
-  -v `pwd`/masterdata:/app/masterdata \
-  inspix-hailstorm:latest
+#!/bin/bash
+
+mkdir -p cache
+mkdir -p masterdata
+
+./hailstorm
+if [ -f "cache/updated" ]; then
+  python3 unpack.py
+fi

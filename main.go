@@ -71,6 +71,7 @@ func main() {
   fAnalyze := flag.Bool("analyze", false, "Do code analysis and exist.")
   fDbOnly := flag.Bool("dbonly", false, "Only download and decrypt DB files, put assets aside.")
   fForce := flag.Bool("force", false, "Ignore current cached version and update caches.")
+  fKeepRaw := flag.Bool("keepraw", false, "Do not delete encrypted raw asset files after decrypting.")
   flag.Parse()
 
   if *fAnalyze {
@@ -157,7 +158,7 @@ func main() {
   }
 
   if len(catalog.Entries) == 0 {
-    rich.Info("No DB is updated, will be stopping process.")
+    rich.Info("Nothing is updated, will be stopping process.")
     return
   }
 
@@ -210,5 +211,11 @@ func main() {
 
   if _, err = os.Create(updatedFlagFile); err != nil {
     panic(err)
+  }
+
+  if !*fKeepRaw {
+    if err := os.RemoveAll(assetsSaveDir); err != nil {
+      panic(err)
+    }
   }
 }
