@@ -29,12 +29,12 @@ if [ ! -v INS_DO_PUSH ]; then
   exit 0
 fi
 
-if [ ! -f $INS_SSH_KEY_PATH ]; then
+if [ ! -f "$INS_SSH_KEY_PATH" ]; then
   echo "git ssh key file does not exists, will be stopping process..."
   exit 166
 fi
 
-if [ -f $UPDATE_FLAG ]; then 
+if [ -f "$UPDATE_FLAG" ]; then 
   git config --global user.name $INS_REPO_USER_NAME
   git config --global user.email $INS_REPO_USER_EMAIL
   git config --global core.sshCommand "ssh -o IdentitiesOnly=yes -o StrictHostKeyChecking=no -i $INS_SSH_KEY_PATH -F /dev/null"
