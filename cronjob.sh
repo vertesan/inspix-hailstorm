@@ -15,6 +15,8 @@ UPDATE_FLAG='cache/updated'
 logfile="cache/`date '+%Y-%m-%d'`.log"
 exec > >(tee -a "$logfile") 2>&1
 
+echo "================= cronjob run at `date '+%Y-%m-%d'` ==================="
+
 if [ ! -v REPO_NAME ]; then
   echo "REPO_NAME is not set, will be stopping process..."
   exit 167
