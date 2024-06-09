@@ -27,3 +27,5 @@ masterdata/
 masterdataYaml/
 hailstorm
 secrets/
+.vscode
+.env.local
