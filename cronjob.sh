@@ -12,6 +12,8 @@ REPO_NAME=diff_repo
 UPDATE_FLAG='cache/updated'
 
 . .env.local
+logfile="cache/`date '+%Y-%m-%d'`.log"
+exec > >(tee -a "$logfile") 2>&1
 
 if [ ! -v REPO_NAME ]; then
   echo "REPO_NAME is not set, will be stopping process..."
