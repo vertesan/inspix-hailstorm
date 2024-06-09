@@ -8,6 +8,8 @@
 # INS_REPO_USER_EMAIL: user email used for push action, takes no effect if INS_DO_PUSH is not set
 
 set -euo pipefail
+cd "$(dirname "$0")"
+
 REPO_NAME=diff_repo
 UPDATE_FLAG='cache/updated'
 
