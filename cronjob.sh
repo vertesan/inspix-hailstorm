@@ -37,11 +37,15 @@ if [ ! -f "$INS_SSH_KEY_PATH" ]; then
 fi
 
 if [ -f "$UPDATE_FLAG" ]; then 
-  git config --global user.name $INS_REPO_USER_NAME
-  git config --global user.email $INS_REPO_USER_EMAIL
-  git config --global core.sshCommand "ssh -o IdentitiesOnly=yes -o StrictHostKeyChecking=no -i $INS_SSH_KEY_PATH -F /dev/null"
-  echo "Cloning from remote repository..."
-  git clone $INS_DIFF_REPO_URI $REPO_NAME
+  if [ ! -d "$REPO_NAME" ]; then
+    echo "Cloning from remote repository..."
+    git clone $INS_DIFF_REPO_URI $REPO_NAME
+  fi
+
+  git -C $REPO_NAME config user.name $INS_REPO_USER_NAME
+  git -C $REPO_NAME config user.email $INS_REPO_USER_EMAIL
+  git -C $REPO_NAME config core.sshCommand "ssh -o IdentitiesOnly=yes -o StrictHostKeyChecking=no -i $INS_SSH_KEY_PATH -F /dev/null"
+  git -C $REPO_NAME pull
 
   cp masterdata/*.yaml $REPO_NAME/
   git -C $REPO_NAME add .
