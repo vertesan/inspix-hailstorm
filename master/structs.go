@@ -18,6 +18,7 @@ type AdvDatas struct {
   SubTitleName string `yaml:"SubTitleName"`
   StartTime time.Time `yaml:"StartTime"`
   EndTime time.Time `yaml:"EndTime"`
+  IsPeriod int `yaml:"IsPeriod"`
 }
 
 type AdvSeries struct {
@@ -55,6 +56,17 @@ type BeginnerMissionsHint struct {
   Id int `yaml:"Id"`
   Name string `yaml:"Name"`
   Description string `yaml:"Description"`
+}
+
+type BirthdayRareBonuses struct {
+  Id int `yaml:"Id"`
+  CardSeriesId int `yaml:"CardSeriesId"`
+  SkillName string `yaml:"SkillName"`
+  LimitBreakTimes int `yaml:"LimitBreakTimes"`
+  MentalBonus int `yaml:"MentalBonus"`
+  VoltageBonus int `yaml:"VoltageBonus"`
+  HeartBonus int `yaml:"HeartBonus"`
+  LoveBonus int `yaml:"LoveBonus"`
 }
 
 type CampaignAddRewardSeries struct {
@@ -122,6 +134,12 @@ type CardDatas struct {
   OrderId int `yaml:"OrderId"`
 }
 
+type CardDuetVoice struct {
+  Id int `yaml:"Id"`
+  CardSeriesId int `yaml:"CardSeriesId"`
+  CharacterIds string `yaml:"CharacterIds"`
+}
+
 type CardEvolutionMaterials struct {
   Id int `yaml:"Id"`
   CostItemsId1 int `yaml:"CostItemsId1"`
@@ -158,6 +176,11 @@ type CardLimitBreakMaterials struct {
 type CardRarities struct {
   Id int `yaml:"Id"`
   RarityName string `yaml:"RarityName"`
+  Evolution0_MaxLevel int `yaml:"Evolution0_MaxLevel"`
+  Evolution1_MaxLevel int `yaml:"Evolution1_MaxLevel"`
+  Evolution2_MaxLevel int `yaml:"Evolution2_MaxLevel"`
+  Evolution3_MaxLevel int `yaml:"Evolution3_MaxLevel"`
+  Evolution4_MaxLevel int `yaml:"Evolution4_MaxLevel"`
 }
 
 type CardSeries struct {
@@ -174,6 +197,12 @@ type CardSeries struct {
   LimitBreak4FanLvPt int `yaml:"LimitBreak4FanLvPt"`
   LimitedType int `yaml:"LimitedType"`
   SideStyleSettingCharacterId string `yaml:"SideStyleSettingCharacterId"`
+  Evolution3Id int `yaml:"Evolution3Id"`
+  Evolution4Id int `yaml:"Evolution4Id"`
+  Evolution3FanLvPt int `yaml:"Evolution3FanLvPt"`
+  Evolution4FanLvPt int `yaml:"Evolution4FanLvPt"`
+  Evolution3RequiredFanLv int `yaml:"Evolution3RequiredFanLv"`
+  Evolution4RequiredFanLv int `yaml:"Evolution4RequiredFanLv"`
 }
 
 type CardSkillEffectDetailParams struct {
@@ -206,6 +235,13 @@ type CardSkillLevelUpMaterials struct {
   CostNum2 int `yaml:"CostNum2"`
   Cost_ItemsId3 int `yaml:"Cost_ItemsId3"`
   CostNum3 int `yaml:"CostNum3"`
+}
+
+type CardSkillModes struct {
+  Id int64 `yaml:"Id"`
+  ModeOffName string `yaml:"ModeOffName"`
+  ModeOnName string `yaml:"ModeOnName"`
+  CharactersId int `yaml:"CharactersId"`
 }
 
 type CardSkillSeries struct {
@@ -303,6 +339,8 @@ type Comics struct {
   ViewType int `yaml:"ViewType"`
   StartTime time.Time `yaml:"StartTime"`
   EndTime time.Time `yaml:"EndTime"`
+  TabListId int `yaml:"TabListId"`
+  AppearanceCharacterIds string `yaml:"AppearanceCharacterIds"`
 }
 
 type ContentGuidances struct {
@@ -543,6 +581,7 @@ type EventMissions struct {
   NextMissionsId int `yaml:"NextMissionsId"`
   SortOrder int `yaml:"SortOrder"`
   TransitionContentsId int `yaml:"TransitionContentsId"`
+  MissionConditionDetail int `yaml:"MissionConditionDetail"`
 }
 
 type ExchangePointConvert struct {
@@ -629,6 +668,9 @@ type GachaSeries struct {
   BgType int `yaml:"BgType"`
   StartTime time.Time `yaml:"StartTime"`
   EndTime time.Time `yaml:"EndTime"`
+  NoticeText string `yaml:"NoticeText"`
+  GachaTimeLimitType int `yaml:"GachaTimeLimitType"`
+  AvailableTime int `yaml:"AvailableTime"`
 }
 
 type Generations struct {
@@ -674,6 +716,21 @@ type GiftlessGachas struct {
   MiniBannerPopId int `yaml:"MiniBannerPopId"`
 }
 
+type GpPrizeExchanges struct {
+  Id int `yaml:"Id"`
+  ProductItemType int `yaml:"ProductItemType"`
+  ProductItemId int `yaml:"ProductItemId"`
+  ProductItemNum int `yaml:"ProductItemNum"`
+  MaterialItemType int `yaml:"MaterialItemType"`
+  MaterialItemId int `yaml:"MaterialItemId"`
+  MaterialItemNum int `yaml:"MaterialItemNum"`
+  LimitNum int `yaml:"LimitNum"`
+  ResetType int `yaml:"ResetType"`
+  OrderId int `yaml:"OrderId"`
+  StartTime time.Time `yaml:"StartTime"`
+  EndTime time.Time `yaml:"EndTime"`
+}
+
 type GradeAddSkillEffectDetails struct {
   Id int64 `yaml:"Id"`
   SkillEffectDetailType string `yaml:"SkillEffectDetailType"`
@@ -693,6 +750,65 @@ type GradeAddSkills struct {
   Description string `yaml:"Description"`
   SkillIcon int `yaml:"SkillIcon"`
   GradeAddSkillEffectsId string `yaml:"GradeAddSkillEffectsId"`
+  OrderId int `yaml:"OrderId"`
+}
+
+type GradeChalQuestStageRewardDatas struct {
+  Id int64 `yaml:"Id"`
+  GradeChalQuestStagesRewardsId int64 `yaml:"GradeChalQuestStagesRewardsId"`
+  RewardType int `yaml:"RewardType"`
+  RewardItemId int `yaml:"RewardItemId"`
+  RewardNum int `yaml:"RewardNum"`
+  OrderId int `yaml:"OrderId"`
+}
+
+type GradeChalQuestStages struct {
+  Id int `yaml:"Id"`
+  GradeChalSeasonId int `yaml:"GradeChalSeasonId"`
+  Name string `yaml:"Name"`
+  Description string `yaml:"Description"`
+  Hint string `yaml:"Hint"`
+  CharacterId int `yaml:"CharacterId"`
+  OrderId int `yaml:"OrderId"`
+  StageType int `yaml:"StageType"`
+  StageIconId int `yaml:"StageIconId"`
+  LiveStagesId int `yaml:"LiveStagesId"`
+  QuestMusicsType int `yaml:"QuestMusicsType"`
+  QuestMusicsDetail int `yaml:"QuestMusicsDetail"`
+  DeckRestrictedType int `yaml:"DeckRestrictedType"`
+  DeckRestrictedDetail int `yaml:"DeckRestrictedDetail"`
+}
+
+type GradeChalQuestStagesRewards struct {
+  Id int64 `yaml:"Id"`
+  GradeChalQuestStagesId int `yaml:"GradeChalQuestStagesId"`
+  OrderId int `yaml:"OrderId"`
+  ConditionsType int `yaml:"ConditionsType"`
+  ConditionsValue int `yaml:"ConditionsValue"`
+}
+
+type GradeChalSeason struct {
+  Id int `yaml:"Id"`
+  Name string `yaml:"Name"`
+  GiveSeasonGradeId int `yaml:"GiveSeasonGradeId"`
+  BgImageId int `yaml:"BgImageId"`
+  StartTime time.Time `yaml:"StartTime"`
+  EndTime time.Time `yaml:"EndTime"`
+}
+
+type GradeChalTotalScoreRewardDatas struct {
+  Id int `yaml:"Id"`
+  GradeChalTotalScoreRewardsId int `yaml:"GradeChalTotalScoreRewardsId"`
+  RewardType int `yaml:"RewardType"`
+  RewardItemId int `yaml:"RewardItemId"`
+  RewardNum int `yaml:"RewardNum"`
+  OrderId int `yaml:"OrderId"`
+}
+
+type GradeChalTotalScoreRewards struct {
+  Id int `yaml:"Id"`
+  GradeChalSeasonId int `yaml:"GradeChalSeasonId"`
+  TotalScore int64 `yaml:"TotalScore"`
   OrderId int `yaml:"OrderId"`
 }
 
@@ -944,6 +1060,29 @@ type HomeBgms struct {
   EndTime time.Time `yaml:"EndTime"`
 }
 
+type ItemExchangeCategoryDatas struct {
+  Id int `yaml:"Id"`
+  ItemExchangeCategoryName string `yaml:"ItemExchangeCategoryName"`
+  ItemId int `yaml:"ItemId"`
+}
+
+type ItemExchanges struct {
+  Id int `yaml:"Id"`
+  ItemExchangeCategoryId int `yaml:"ItemExchangeCategoryId"`
+  ProductItemType int `yaml:"ProductItemType"`
+  ProductItemId int `yaml:"ProductItemId"`
+  ProductItemNum int `yaml:"ProductItemNum"`
+  MaterialItemType int `yaml:"MaterialItemType"`
+  MaterialItemId int `yaml:"MaterialItemId"`
+  MaterialItemNum int `yaml:"MaterialItemNum"`
+  LimitNum int `yaml:"LimitNum"`
+  ResetType int `yaml:"ResetType"`
+  IsVisibleEndTime int `yaml:"IsVisibleEndTime"`
+  OrderId int `yaml:"OrderId"`
+  StartTime time.Time `yaml:"StartTime"`
+  EndTime time.Time `yaml:"EndTime"`
+}
+
 type ItemSources struct {
   ItemsId int `yaml:"ItemsId"`
   StandardQuestStagesId string `yaml:"StandardQuestStagesId"`
@@ -982,6 +1121,15 @@ type LearningLiveReleaseConditions struct {
   EndTime time.Time `yaml:"EndTime"`
 }
 
+type LimitBreakMaterialConvertRate struct {
+  Id int `yaml:"Id"`
+  LimitBreakMaterialRarity int `yaml:"LimitBreakMaterialRarity"`
+  LimitBreakMaterialNum int `yaml:"LimitBreakMaterialNum"`
+  ProductItemType int `yaml:"ProductItemType"`
+  ProductItemId int `yaml:"ProductItemId"`
+  ProductItemNum int `yaml:"ProductItemNum"`
+}
+
 type LimitBreakMaterialRate struct {
   Id int `yaml:"Id"`
   CardSeriesId int `yaml:"CardSeriesId"`
@@ -1007,6 +1155,10 @@ type LiveStages struct {
   BaseGainVoltage int `yaml:"BaseGainVoltage"`
   VoltageStepClass int `yaml:"VoltageStepClass"`
   BackGroundId int `yaml:"BackGroundId"`
+  StageSkillConditionId int64 `yaml:"StageSkillConditionId"`
+  StageSkillEffectId int64 `yaml:"StageSkillEffectId"`
+  StageSkillDescription string `yaml:"StageSkillDescription"`
+  StageSkillSetIds string `yaml:"StageSkillSetIds"`
 }
 
 type LoginBonuses struct {
@@ -1200,6 +1352,8 @@ type Musics struct {
   StartTime time.Time `yaml:"StartTime"`
   EndTime time.Time `yaml:"EndTime"`
   MaxAp int `yaml:"MaxAp"`
+  IsVideoMode int `yaml:"IsVideoMode"`
+  VideoBgId int `yaml:"VideoBgId"`
 }
 
 type PetalCoinExchangeRate struct {
@@ -1371,6 +1525,37 @@ type RaidTopProgressImage struct {
   RequirePoint int64 `yaml:"RequirePoint"`
 }
 
+type RentalCardDatas struct {
+  Id int64 `yaml:"Id"`
+  CardDatasId int `yaml:"CardDatasId"`
+  StyleLevel int `yaml:"StyleLevel"`
+  LimitBreakLevel int `yaml:"LimitBreakLevel"`
+  SpecialAppealLevel int `yaml:"SpecialAppealLevel"`
+  SkillLevel int `yaml:"SkillLevel"`
+}
+
+type RentalDeckCards struct {
+  Id int `yaml:"Id"`
+  RentalDecksId int `yaml:"RentalDecksId"`
+  CharactersId int `yaml:"CharactersId"`
+  RentalCardId_Main int64 `yaml:"RentalCardId_Main"`
+  RentalCardId_Side1 int64 `yaml:"RentalCardId_Side1"`
+  RentalCardId_Side2 int64 `yaml:"RentalCardId_Side2"`
+}
+
+type RentalDecks struct {
+  Id int `yaml:"Id"`
+  DeckName string `yaml:"DeckName"`
+  GenerationsId int `yaml:"GenerationsId"`
+  DeckNumber int `yaml:"DeckNumber"`
+  AceCardId int64 `yaml:"AceCardId"`
+  ReleaseConditionsType int `yaml:"ReleaseConditionsType"`
+  ConditionsValue int `yaml:"ConditionsValue"`
+  ReleaseConditonsDescription string `yaml:"ReleaseConditonsDescription"`
+  ReleaseDeckStartTime time.Time `yaml:"ReleaseDeckStartTime"`
+  ReleaseDeckEndTime time.Time `yaml:"ReleaseDeckEndTime"`
+}
+
 type SeasonFanLevels struct {
   Id int `yaml:"Id"`
   SeasonsId int `yaml:"SeasonsId"`
@@ -1387,6 +1572,7 @@ type SeasonGrade struct {
   CountEndTime time.Time `yaml:"CountEndTime"`
   DisplayStartTime time.Time `yaml:"DisplayStartTime"`
   DisplayEndTime time.Time `yaml:"DisplayEndTime"`
+  TermTitle string `yaml:"TermTitle"`
 }
 
 type SeasonGradeRewardDatas struct {
@@ -1492,6 +1678,36 @@ type SimulationGraphLimit struct {
   UpperLimitBP int `yaml:"UpperLimitBP"`
 }
 
+type StageSkillConditionDetails struct {
+  Id int64 `yaml:"Id"`
+  StageSkillConditionId int64 `yaml:"StageSkillConditionId"`
+  SkillConditionDetailType string `yaml:"SkillConditionDetailType"`
+  ConditionValue int64 `yaml:"ConditionValue"`
+}
+
+type StageSkillConditions struct {
+  Id int64 `yaml:"Id"`
+  ConditionType int `yaml:"ConditionType"`
+}
+
+type StageSkillEffectDetails struct {
+  Id int64 `yaml:"Id"`
+  StageSkillEffectId int64 `yaml:"StageSkillEffectId"`
+  SkillEffectDetailType string `yaml:"SkillEffectDetailType"`
+  EffectValue int64 `yaml:"EffectValue"`
+}
+
+type StageSkillEffects struct {
+  Id int64 `yaml:"Id"`
+  ActionType int `yaml:"ActionType"`
+}
+
+type StageSkillSets struct {
+  Id int64 `yaml:"Id"`
+  StageSkillConditionId int64 `yaml:"StageSkillConditionId"`
+  StageSkillEffectId int64 `yaml:"StageSkillEffectId"`
+}
+
 type Stamps struct {
   Id int `yaml:"Id"`
   Name string `yaml:"Name"`
@@ -1593,9 +1809,25 @@ type SubCharacters struct {
   Label string `yaml:"Label"`
 }
 
+type TabList struct {
+  Id int `yaml:"Id"`
+  TabListName string `yaml:"TabListName"`
+}
+
 type TextsPlaceHolder struct {
   Id int `yaml:"Id"`
   Description string `yaml:"Description"`
+}
+
+type TicketOnlyGachas struct {
+  Id int `yaml:"Id"`
+  GachaTicketId int `yaml:"GachaTicketId"`
+  TicketNum int `yaml:"TicketNum"`
+  ConsectiveGachaTimes int `yaml:"ConsectiveGachaTimes"`
+  GachaButtonType int `yaml:"GachaButtonType"`
+  ButtonPopId int `yaml:"ButtonPopId"`
+  MiniBannerPopId int `yaml:"MiniBannerPopId"`
+  MiniBannerDispCondition int `yaml:"MiniBannerDispCondition"`
 }
 
 type TutorialDeckCards struct {
