@@ -3,6 +3,7 @@ package master
 
 var (
   MasterMap = map[string]any{
+    "advalbums.tsv": AdvAlbums{},
     "advdatas.tsv": AdvDatas{},
     "advseries.tsv": AdvSeries{},
     "advstorydigestmovies.tsv": AdvStoryDigestMovies{},
@@ -91,6 +92,7 @@ var (
     "grade.tsv": Grade{},
     "graderewarddatas.tsv": GradeRewardDatas{},
     "graderewards.tsv": GradeRewards{},
+    "grandprixdailypoints.tsv": GrandPrixDailyPoints{},
     "grandprixpointbonuses.tsv": GrandPrixPointBonuses{},
     "grandprixquestseries.tsv": GrandPrixQuestSeries{},
     "grandprixqueststages.tsv": GrandPrixQuestStages{},
@@ -100,6 +102,7 @@ var (
     "grandprixrewards.tsv": GrandPrixRewards{},
     "helpimages.tsv": HelpImages{},
     "homebgms.tsv": HomeBgms{},
+    "ingamemissionskilldetails.tsv": IngameMissionSkillDetails{},
     "itemexchangecategorydatas.tsv": ItemExchangeCategoryDatas{},
     "itemexchanges.tsv": ItemExchanges{},
     "itemsources.tsv": ItemSources{},
@@ -162,7 +165,9 @@ var (
     "selectticketseries.tsv": SelectTicketSeries{},
     "shopitems.tsv": ShopItems{},
     "shops.tsv": Shops{},
+    "sidestylesettings.tsv": SideStyleSettings{},
     "simulationgraphlimit.tsv": SimulationGraphLimit{},
+    "stagescoremultipliersettings.tsv": StageScoreMultiplierSettings{},
     "stageskillconditiondetails.tsv": StageSkillConditionDetails{},
     "stageskillconditions.tsv": StageSkillConditions{},
     "stageskilleffectdetails.tsv": StageSkillEffectDetails{},

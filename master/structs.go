@@ -3,6 +3,12 @@ package master
 
 import "time"
 
+type AdvAlbums struct {
+  Id int64 `yaml:"Id"`
+  StartTime time.Time `yaml:"StartTime"`
+  EndTime time.Time `yaml:"EndTime"`
+}
+
 type AdvDatas struct {
   Id int `yaml:"Id"`
   AdvSeriesId int `yaml:"AdvSeriesId"`
@@ -29,6 +35,7 @@ type AdvSeries struct {
   StartTime time.Time `yaml:"StartTime"`
   EndTime time.Time `yaml:"EndTime"`
   FiscalYearDisplay int `yaml:"FiscalYearDisplay"`
+  AdvAlbumId int64 `yaml:"AdvAlbumId"`
 }
 
 type AdvStoryDigestMovies struct {
@@ -331,6 +338,11 @@ type Characters struct {
   ShowSeasonFanLvEndTime time.Time `yaml:"ShowSeasonFanLvEndTime"`
   IsExistFanLv int `yaml:"IsExistFanLv"`
   StyleType int `yaml:"StyleType"`
+  PrintFilterType int `yaml:"PrintFilterType"`
+  DisplayFullName string `yaml:"DisplayFullName"`
+  LatinAlpabetFullName string `yaml:"LatinAlpabetFullName"`
+  NameDisplayType int `yaml:"NameDisplayType"`
+  DisplayGeneration string `yaml:"DisplayGeneration"`
 }
 
 type Comics struct {
@@ -478,6 +490,8 @@ type DreamQuestSeries struct {
   StartTime time.Time `yaml:"StartTime"`
   EndTime time.Time `yaml:"EndTime"`
   DreamLiveSeriesListId int `yaml:"DreamLiveSeriesListId"`
+  ReleaseStartTime time.Time `yaml:"ReleaseStartTime"`
+  MessageTextId int `yaml:"MessageTextId"`
 }
 
 type DreamQuestStages struct {
@@ -671,6 +685,7 @@ type GachaSeries struct {
   NoticeText string `yaml:"NoticeText"`
   GachaTimeLimitType int `yaml:"GachaTimeLimitType"`
   AvailableTime int `yaml:"AvailableTime"`
+  GachaStartBgm int `yaml:"GachaStartBgm"`
 }
 
 type Generations struct {
@@ -947,6 +962,14 @@ type GradeRewards struct {
   GradeNum int `yaml:"GradeNum"`
 }
 
+type GrandPrixDailyPoints struct {
+  Id int `yaml:"Id"`
+  MinRank int `yaml:"MinRank"`
+  MaxRank int `yaml:"MaxRank"`
+  BasePoint int `yaml:"BasePoint"`
+  AdditionalPoint int `yaml:"AdditionalPoint"`
+}
+
 type GrandPrixPointBonuses struct {
   Id int64 `yaml:"Id"`
   GrandPrixesId int `yaml:"GrandPrixesId"`
@@ -997,6 +1020,7 @@ type GrandPrixQuestStages struct {
   ScoreBonusValue1 int `yaml:"ScoreBonusValue1"`
   ScoreBonusValue2 int `yaml:"ScoreBonusValue2"`
   ScoreBonusValue3 int `yaml:"ScoreBonusValue3"`
+  SkipRestrictedType int `yaml:"SkipRestrictedType"`
 }
 
 type GrandPrix struct {
@@ -1058,6 +1082,20 @@ type HomeBgms struct {
   NighttimeBgmId int `yaml:"NighttimeBgmId"`
   StartTime time.Time `yaml:"StartTime"`
   EndTime time.Time `yaml:"EndTime"`
+}
+
+type IngameMissionSkillDetails struct {
+  Id int64 `yaml:"Id"`
+  GroupId int64 `yaml:"GroupId"`
+  RareFlag int `yaml:"RareFlag"`
+  MissionType int `yaml:"MissionType"`
+  Param1 int64 `yaml:"Param1"`
+  Param2 int64 `yaml:"Param2"`
+  AddParam int64 `yaml:"AddParam"`
+  BaseScore int64 `yaml:"BaseScore"`
+  AddScore int64 `yaml:"AddScore"`
+  Probability int `yaml:"Probability"`
+  MissionText string `yaml:"MissionText"`
 }
 
 type ItemExchangeCategoryDatas struct {
@@ -1251,6 +1289,7 @@ type MusicLearningQuestSeries struct {
   Name string `yaml:"Name"`
   StartTime time.Time `yaml:"StartTime"`
   EndTime time.Time `yaml:"EndTime"`
+  ExReleaseConditionsLevel int `yaml:"ExReleaseConditionsLevel"`
 }
 
 type MusicLearningQuestStages struct {
@@ -1276,6 +1315,9 @@ type MusicLearningQuestStages struct {
   Score1 int64 `yaml:"Score1"`
   GainStylePoint int `yaml:"GainStylePoint"`
   GainMusicExp int `yaml:"GainMusicExp"`
+  SkipRestrictedType int `yaml:"SkipRestrictedType"`
+  StartTime time.Time `yaml:"StartTime"`
+  EndTime time.Time `yaml:"EndTime"`
 }
 
 type MusicLevels struct {
@@ -1625,6 +1667,8 @@ type SelectTicketExchangeRate struct {
   ExchangeItemType int `yaml:"ExchangeItemType"`
   ExchangeItemId int `yaml:"ExchangeItemId"`
   ExchangeItemQuantity int `yaml:"ExchangeItemQuantity"`
+  StartTime time.Time `yaml:"StartTime"`
+  EndTime time.Time `yaml:"EndTime"`
 }
 
 type SelectTicketSeries struct {
@@ -1668,6 +1712,13 @@ type Shops struct {
   OrderId int `yaml:"OrderId"`
 }
 
+type SideStyleSettings struct {
+  Id int `yaml:"Id"`
+  CardSeriesId int `yaml:"CardSeriesId"`
+  GenerationsId int `yaml:"GenerationsId"`
+  SideStyleSetCharacterIds string `yaml:"SideStyleSetCharacterIds"`
+}
+
 type SimulationGraphLimit struct {
   Id int `yaml:"Id"`
   NumberOfMember int `yaml:"NumberOfMember"`
@@ -1676,6 +1727,14 @@ type SimulationGraphLimit struct {
   UpperLimitCool int `yaml:"UpperLimitCool"`
   UpperLimitMental int `yaml:"UpperLimitMental"`
   UpperLimitBP int `yaml:"UpperLimitBP"`
+}
+
+type StageScoreMultiplierSettings struct {
+  Id int64 `yaml:"Id"`
+  MinTargetNum int `yaml:"MinTargetNum"`
+  MaxTargetNum int `yaml:"MaxTargetNum"`
+  BaseMultiplier int64 `yaml:"BaseMultiplier"`
+  AdditionalMultiplier int64 `yaml:"AdditionalMultiplier"`
 }
 
 type StageSkillConditionDetails struct {
