@@ -139,6 +139,11 @@ type CardDatas struct {
   AttributeId int `yaml:"AttributeId"`
   SpineId int `yaml:"SpineId"`
   OrderId int `yaml:"OrderId"`
+  CenterSkillSeriesId int `yaml:"CenterSkillSeriesId"`
+  CenterAttributeSeriesId int `yaml:"CenterAttributeSeriesId"`
+  RhythmGameSkillSeriesId int `yaml:"RhythmGameSkillSeriesId"`
+  CenterSkillLvUpItemId int `yaml:"CenterSkillLvUpItemId"`
+  RhythmGameSkillLvUpItemId int `yaml:"RhythmGameSkillLvUpItemId"`
 }
 
 type CardDuetVoice struct {
@@ -242,6 +247,8 @@ type CardSkillLevelUpMaterials struct {
   CostNum2 int `yaml:"CostNum2"`
   Cost_ItemsId3 int `yaml:"Cost_ItemsId3"`
   CostNum3 int `yaml:"CostNum3"`
+  Cost_ItemsIds string `yaml:"Cost_ItemsIds"`
+  CostNums string `yaml:"CostNums"`
 }
 
 type CardSkillModes struct {
@@ -265,6 +272,45 @@ type CardSkills struct {
   SkillCost int `yaml:"SkillCost"`
   ApperanceType int `yaml:"ApperanceType"`
   CardSkillEffectId string `yaml:"CardSkillEffectId"`
+  Description string `yaml:"Description"`
+}
+
+type CenterAttributeEffects struct {
+  Id int `yaml:"Id"`
+  CenterAttributeEffectType int `yaml:"CenterAttributeEffectType"`
+  CenterAttributeEffectValue int `yaml:"CenterAttributeEffectValue"`
+}
+
+type CenterAttributes struct {
+  Id int64 `yaml:"Id"`
+  CenterAttributeSeriesId int `yaml:"CenterAttributeSeriesId"`
+  CenterAttributeName string `yaml:"CenterAttributeName"`
+  TargetIds string `yaml:"TargetIds"`
+  CenterAttributeEffectId int `yaml:"CenterAttributeEffectId"`
+  Description string `yaml:"Description"`
+}
+
+type CenterSkillConditions struct {
+  Id int `yaml:"Id"`
+  CenterSkillConditionType int `yaml:"CenterSkillConditionType"`
+  CenterSkillConditionValue int `yaml:"CenterSkillConditionValue"`
+  CenterSkillConditionValue2 int `yaml:"CenterSkillConditionValue2"`
+}
+
+type CenterSkillEffects struct {
+  Id int `yaml:"Id"`
+  CenterSkillEffectType int `yaml:"CenterSkillEffectType"`
+  CenterSkillEffectValue int `yaml:"CenterSkillEffectValue"`
+}
+
+type CenterSkills struct {
+  Id int64 `yaml:"Id"`
+  CenterSkillSeriesId int `yaml:"CenterSkillSeriesId"`
+  CenterSkillName string `yaml:"CenterSkillName"`
+  SkillLevel int `yaml:"SkillLevel"`
+  OrderId int `yaml:"OrderId"`
+  CenterSkillConditionIds string `yaml:"CenterSkillConditionIds"`
+  CenterSkillEffectId int `yaml:"CenterSkillEffectId"`
   Description string `yaml:"Description"`
 }
 
@@ -343,6 +389,7 @@ type Characters struct {
   LatinAlpabetFullName string `yaml:"LatinAlpabetFullName"`
   NameDisplayType int `yaml:"NameDisplayType"`
   DisplayGeneration string `yaml:"DisplayGeneration"`
+  GraduateIntroduction string `yaml:"GraduateIntroduction"`
 }
 
 type Comics struct {
@@ -353,6 +400,17 @@ type Comics struct {
   EndTime time.Time `yaml:"EndTime"`
   TabListId int `yaml:"TabListId"`
   AppearanceCharacterIds string `yaml:"AppearanceCharacterIds"`
+}
+
+type CommonMissions struct {
+  Id int `yaml:"Id"`
+  ClearConditionNum int `yaml:"ClearConditionNum"`
+  RewardType int `yaml:"RewardType"`
+  ItemsId int `yaml:"ItemsId"`
+  RewardNum int `yaml:"RewardNum"`
+  OrderId int `yaml:"OrderId"`
+  StartTime time.Time `yaml:"StartTime"`
+  EndTime time.Time `yaml:"EndTime"`
 }
 
 type ContentGuidances struct {
@@ -454,6 +512,13 @@ type DeckMemberPositions struct {
   OrderId int `yaml:"OrderId"`
   StartTime time.Time `yaml:"StartTime"`
   EndTime time.Time `yaml:"EndTime"`
+}
+
+type DifficultyBgImages struct {
+  Id int `yaml:"Id"`
+  MusicDifficulty int `yaml:"MusicDifficulty"`
+  OutGameBgImageId int `yaml:"OutGameBgImageId"`
+  InGameBgImageId int `yaml:"InGameBgImageId"`
 }
 
 type DownloadImages struct {
@@ -1159,6 +1224,20 @@ type LearningLiveReleaseConditions struct {
   EndTime time.Time `yaml:"EndTime"`
 }
 
+type LevelUpMaterialDetails struct {
+  Id int `yaml:"Id"`
+  MaterialDetailSeriesId int `yaml:"MaterialDetailSeriesId"`
+  CostItemsId int `yaml:"CostItemsId"`
+  CostNum int `yaml:"CostNum"`
+}
+
+type LevelUpMaterials struct {
+  Id int `yaml:"Id"`
+  MaterialSeriesId int `yaml:"MaterialSeriesId"`
+  SkillLevel int `yaml:"SkillLevel"`
+  MaterialDetailSeriesId int `yaml:"MaterialDetailSeriesId"`
+}
+
 type LimitBreakMaterialConvertRate struct {
   Id int `yaml:"Id"`
   LimitBreakMaterialRarity int `yaml:"LimitBreakMaterialRarity"`
@@ -1283,6 +1362,23 @@ type Missions struct {
   Hint int `yaml:"Hint"`
 }
 
+type MusicDropRewardDetails struct {
+  Id int `yaml:"Id"`
+  MusicDropRewardsId int `yaml:"MusicDropRewardsId"`
+  RewardType int `yaml:"RewardType"`
+  RewardItemId int `yaml:"RewardItemId"`
+  RewardNum int `yaml:"RewardNum"`
+  Odds int `yaml:"Odds"`
+}
+
+type MusicDropRewards struct {
+  Id int `yaml:"Id"`
+  DropRewardSeriesId int `yaml:"DropRewardSeriesId"`
+  MusicDropRewardOdds int `yaml:"MusicDropRewardOdds"`
+  StartTime time.Time `yaml:"StartTime"`
+  EndTime time.Time `yaml:"EndTime"`
+}
+
 type MusicLearningQuestSeries struct {
   Id int `yaml:"Id"`
   MusicsId int `yaml:"MusicsId"`
@@ -1364,6 +1460,50 @@ type MusicMasteryVoltageBonuses struct {
   DemandVoltagePt int `yaml:"DemandVoltagePt"`
 }
 
+type MusicScoreRewardDatas struct {
+  Id int `yaml:"Id"`
+  MissionStars int `yaml:"MissionStars"`
+  RewardType int `yaml:"RewardType"`
+  RewardItemId int `yaml:"RewardItemId"`
+  RewardNum int `yaml:"RewardNum"`
+}
+
+type MusicScoreRewards struct {
+  Id int `yaml:"Id"`
+  ScoreRewardSeriesId int `yaml:"ScoreRewardSeriesId"`
+  ScoreRewardType int `yaml:"ScoreRewardType"`
+  ScoreRewardConditionValue1 int64 `yaml:"ScoreRewardConditionValue1"`
+  ScoreRewardConditionValue2 int64 `yaml:"ScoreRewardConditionValue2"`
+  ScoreRewardConditionValue3 int64 `yaml:"ScoreRewardConditionValue3"`
+  ScoreRewardConditionValue4 int64 `yaml:"ScoreRewardConditionValue4"`
+  ScoreRewardDatasId1 int `yaml:"ScoreRewardDatasId1"`
+  ScoreRewardDatasId2 int `yaml:"ScoreRewardDatasId2"`
+  ScoreRewardDatasId3 int `yaml:"ScoreRewardDatasId3"`
+  ScoreRewardDatasId4 int `yaml:"ScoreRewardDatasId4"`
+}
+
+type MusicScores struct {
+  Id int `yaml:"Id"`
+  NormalLevel int `yaml:"NormalLevel"`
+  HardLevel int `yaml:"HardLevel"`
+  ExpertLevel int `yaml:"ExpertLevel"`
+  MasterLevel int `yaml:"MasterLevel"`
+  NormalMaxCombo int `yaml:"NormalMaxCombo"`
+  HardMaxCombo int `yaml:"HardMaxCombo"`
+  ExpertMaxCombo int `yaml:"ExpertMaxCombo"`
+  MasterMaxCombo int `yaml:"MasterMaxCombo"`
+  ShouldVerifyNotesCount int `yaml:"ShouldVerifyNotesCount"`
+  ScoreRewardSeriesId int `yaml:"ScoreRewardSeriesId"`
+  NormalGainMusicExp int `yaml:"NormalGainMusicExp"`
+  HardGainMusicExp int `yaml:"HardGainMusicExp"`
+  ExpertGainMusicExp int `yaml:"ExpertGainMusicExp"`
+  MasterGainMusicExp int `yaml:"MasterGainMusicExp"`
+  NormalDropRewardSeriesId int `yaml:"NormalDropRewardSeriesId"`
+  HardDropRewardSeriesId int `yaml:"HardDropRewardSeriesId"`
+  ExpertDropRewardSeriesId int `yaml:"ExpertDropRewardSeriesId"`
+  MasterDropRewardSeriesId int `yaml:"MasterDropRewardSeriesId"`
+}
+
 type Musics struct {
   Id int `yaml:"Id"`
   OrderId int `yaml:"OrderId"`
@@ -1396,6 +1536,8 @@ type Musics struct {
   MaxAp int `yaml:"MaxAp"`
   IsVideoMode int `yaml:"IsVideoMode"`
   VideoBgId int `yaml:"VideoBgId"`
+  SongType int `yaml:"SongType"`
+  MusicScoreReleaseTime time.Time `yaml:"MusicScoreReleaseTime"`
 }
 
 type PetalCoinExchangeRate struct {
@@ -1596,6 +1738,99 @@ type RentalDecks struct {
   ReleaseConditonsDescription string `yaml:"ReleaseConditonsDescription"`
   ReleaseDeckStartTime time.Time `yaml:"ReleaseDeckStartTime"`
   ReleaseDeckEndTime time.Time `yaml:"ReleaseDeckEndTime"`
+}
+
+type RhythmGameClassDatas struct {
+  Id int `yaml:"Id"`
+  Name string `yaml:"Name"`
+  RhythmGameConditionType int `yaml:"RhythmGameConditionType"`
+  RhythmGameClassesId int `yaml:"RhythmGameClassesId"`
+  ClassTier int `yaml:"ClassTier"`
+  GoalCount int64 `yaml:"GoalCount"`
+  OrderId int `yaml:"OrderId"`
+  ReleaseStartTime time.Time `yaml:"ReleaseStartTime"`
+  ReleaseEndTime time.Time `yaml:"ReleaseEndTime"`
+}
+
+type RhythmGameClasses struct {
+  Id int `yaml:"Id"`
+  ClassName string `yaml:"ClassName"`
+  MaxClassTier int `yaml:"MaxClassTier"`
+}
+
+type RhythmGameClassMissionRewards struct {
+  Id int `yaml:"Id"`
+  RhythmGameClassDatasId int `yaml:"RhythmGameClassDatasId"`
+  RewardType int `yaml:"RewardType"`
+  RewardItemId int `yaml:"RewardItemId"`
+  RewardNum int `yaml:"RewardNum"`
+  OrderId int `yaml:"OrderId"`
+}
+
+type RhythmGameHelpImages struct {
+  Id int `yaml:"Id"`
+  Name string `yaml:"Name"`
+  Scene int `yaml:"Scene"`
+  OrderId int `yaml:"OrderId"`
+}
+
+type RhythmGameSkillConditions struct {
+  Id int `yaml:"Id"`
+  RhythmGameSkillConditionType int `yaml:"RhythmGameSkillConditionType"`
+  RhythmGameSkillConditionValue int `yaml:"RhythmGameSkillConditionValue"`
+  RhythmGameSkillConditionValue2 int `yaml:"RhythmGameSkillConditionValue2"`
+}
+
+type RhythmGameSkillEffects struct {
+  Id int `yaml:"Id"`
+  RhythmGameSkillEffectType int `yaml:"RhythmGameSkillEffectType"`
+  TargetIds string `yaml:"TargetIds"`
+  RhythmGameSkillEffectValue int `yaml:"RhythmGameSkillEffectValue"`
+  RhythmGameSkillEffectValue2 int `yaml:"RhythmGameSkillEffectValue2"`
+}
+
+type RhythmGameSkillLvUpItemDetails struct {
+  Id int `yaml:"Id"`
+  ItemDetailSeriesId int `yaml:"ItemDetailSeriesId"`
+  CostItemsId int `yaml:"CostItemsId"`
+  CostNum int `yaml:"CostNum"`
+}
+
+type RhythmGameSkillLvUpItems struct {
+  Id int `yaml:"Id"`
+  ItemSeriesId int `yaml:"ItemSeriesId"`
+  SkillLevel int `yaml:"SkillLevel"`
+  ItemDetailSeriesId int `yaml:"ItemDetailSeriesId"`
+}
+
+type RhythmGameSkills struct {
+  Id int64 `yaml:"Id"`
+  RhythmGameSkillSeriesId int `yaml:"RhythmGameSkillSeriesId"`
+  RhythmGameSkillName string `yaml:"RhythmGameSkillName"`
+  SkillLevel int `yaml:"SkillLevel"`
+  OrderId int `yaml:"OrderId"`
+  RhythmGameSkillConditionIds string `yaml:"RhythmGameSkillConditionIds"`
+  RhythmGameSkillEffectId int `yaml:"RhythmGameSkillEffectId"`
+  ConsumeAP int `yaml:"ConsumeAP"`
+  Description string `yaml:"Description"`
+}
+
+type RhythmGameTotalMissionRewards struct {
+  Id int `yaml:"Id"`
+  RhythmGameTotalMissionsId int `yaml:"RhythmGameTotalMissionsId"`
+  RewardType int `yaml:"RewardType"`
+  RewardItemId int `yaml:"RewardItemId"`
+  RewardNum int `yaml:"RewardNum"`
+  OrderId int `yaml:"OrderId"`
+}
+
+type RhythmGameTotalMissions struct {
+  Id int `yaml:"Id"`
+  Description string `yaml:"Description"`
+  ConditionRhythmGameClassDatasOrderId int `yaml:"ConditionRhythmGameClassDatasOrderId"`
+  OrderId int `yaml:"OrderId"`
+  ReleaseStartTime time.Time `yaml:"ReleaseStartTime"`
+  ReleaseEndTime time.Time `yaml:"ReleaseEndTime"`
 }
 
 type SeasonFanLevels struct {
@@ -1819,6 +2054,21 @@ type StandardQuestStages struct {
   ItemSourceIconId int `yaml:"ItemSourceIconId"`
 }
 
+type StickerExchanges struct {
+  Id int `yaml:"Id"`
+  ProductStickerId int `yaml:"ProductStickerId"`
+  ProductStickerNum int `yaml:"ProductStickerNum"`
+  MaterialItemType int `yaml:"MaterialItemType"`
+  MaterialItemId int `yaml:"MaterialItemId"`
+  MaterialItemNum int `yaml:"MaterialItemNum"`
+  LimitNum int `yaml:"LimitNum"`
+  ResetType int `yaml:"ResetType"`
+  IsVisibleEndTime int `yaml:"IsVisibleEndTime"`
+  OrderId int `yaml:"OrderId"`
+  StartTime time.Time `yaml:"StartTime"`
+  EndTime time.Time `yaml:"EndTime"`
+}
+
 type Stickers struct {
   Id int `yaml:"Id"`
   Name string `yaml:"Name"`
@@ -1871,6 +2121,12 @@ type SubCharacters struct {
 type TabList struct {
   Id int `yaml:"Id"`
   TabListName string `yaml:"TabListName"`
+}
+
+type Targets struct {
+  Id int `yaml:"Id"`
+  TargetType int `yaml:"TargetType"`
+  TargetValue int `yaml:"TargetValue"`
 }
 
 type TextsPlaceHolder struct {
