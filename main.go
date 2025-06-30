@@ -90,6 +90,7 @@ func main() {
   fDbOnly := flag.Bool("dbonly", false, "Only download and decrypt DB files, put assets aside.")
   fForce := flag.Bool("force", false, "Ignore current cached version and update caches.")
   fKeepRaw := flag.Bool("keepraw", false, "Do not delete encrypted raw asset files after decrypting.")
+  fConvert := flag.Bool("convert", false, "Only generate cache/plain from existing cache/assets without downloading.")
   fKeepPath := flag.Bool("keep-path", false, "Imitate url download path on file system for assets.")
   fClientVersion := flag.String("client-version", "", "Specify client version manually.")
   fResInfo := flag.String("res-info", "", "Specify resource info manually.")
@@ -98,6 +99,30 @@ func main() {
 
   if *fAnalyze {
     doAnalyze()
+    return
+  }
+
+  if *fConvert {
+    rich.Info("Convert mode: generating cache/plain from existing cache/assets...")
+    
+    // Read existing catalog if it exists
+    if _, err := os.Stat(catalogJsonFile); os.IsNotExist(err) {
+      rich.Panic("No existing catalog found. Run without -convert first to download assets.")
+    }
+    
+    entries := []manifest.Entry{}
+    if err := utils.ReadFromJsonFile(catalogJsonFile, &entries); err != nil {
+      panic(err)
+    }
+    
+    catalog := &manifest.Catalog{
+      Entries: entries,
+    }
+    
+    // Only decrypt existing assets
+    manifest.DecryptAllAssets(catalog, decrpytedAssetsSaveDir, assetsSaveDir)
+    
+    rich.Info("Conversion completed.")
     return
   }
 

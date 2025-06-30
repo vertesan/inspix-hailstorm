@@ -147,10 +147,24 @@ func downloadOne(
     defer fs.Close()
     bufw := bufio.NewWriter(fs)
     if _, err := bufw.ReadFrom(res.Body); err != nil {
-      panic(err)
+      rich.Error("Error reading response body: %v", err)
+      fs.Close()
+      res.Body.Close()
+      if err := os.Remove(fmt.Sprintf("%v/%v", saveDir, entry.RealName)); err != nil {
+        rich.Warning("Failed to remove incomplete file: %v", err)
+      }
+      rich.Warning("Failed to read response body for %v, retrying...(%d/%d)", request.URL, i+1, MAX_RETRIES)
+      continue
     }
     if err := bufw.Flush(); err != nil {
-      panic(err)
+      rich.Error("Error flushing buffer: %v", err)
+      fs.Close()
+      res.Body.Close()
+      if err := os.Remove(fmt.Sprintf("%v/%v", saveDir, entry.RealName)); err != nil {
+        rich.Warning("Failed to remove incomplete file: %v", err)
+      }
+      rich.Warning("Failed to flush buffer for %v, retrying...(%d/%d)", request.URL, i+1, MAX_RETRIES)
+      continue
     }
 
     counter.Increase()
