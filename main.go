@@ -91,6 +91,7 @@ func main() {
   fForce := flag.Bool("force", false, "Ignore current cached version and update caches.")
   fKeepRaw := flag.Bool("keepraw", false, "Do not delete encrypted raw asset files after decrypting.")
   fConvert := flag.Bool("convert", false, "Only generate cache/plain from existing cache/assets without downloading.")
+  fMaster := flag.Bool("master", false, "Only generate masterdata from existing cache/plain without downloading.")
   fKeepPath := flag.Bool("keep-path", false, "Imitate url download path on file system for assets.")
   fClientVersion := flag.String("client-version", "", "Specify client version manually.")
   fResInfo := flag.String("res-info", "", "Specify resource info manually.")
@@ -123,6 +124,63 @@ func main() {
     manifest.DecryptAllAssets(catalog, decrpytedAssetsSaveDir, assetsSaveDir)
     
     rich.Info("Conversion completed.")
+    return
+  }
+
+  if *fMaster {
+    rich.Info("Master mode: generating masterdata from existing cache/plain...")
+    
+    // Read existing catalog if it exists
+    if _, err := os.Stat(catalogJsonFile); os.IsNotExist(err) {
+      rich.Panic("No existing catalog found. Run without -master first to download assets.")
+    }
+    
+    entries := []manifest.Entry{}
+    if err := utils.ReadFromJsonFile(catalogJsonFile, &entries); err != nil {
+      panic(err)
+    }
+    
+    catalog := &manifest.Catalog{
+      Entries: entries,
+    }
+    
+    // Filter to only DB files
+    filterDb(catalog)
+    
+    // Generate masterdata directory
+    if err := os.MkdirAll(dbSaveDir, 0755); err != nil {
+      panic(err)
+    }
+    
+    errCount := 0
+    for _, entry := range catalog.Entries {
+      if entry.StrTypeCrc != "tsv" {
+        continue
+      }
+      dbFile, err := os.Open(decrpytedAssetsSaveDir + "/" + entry.StrLabelCrc)
+      if err != nil {
+        rich.Warning("Database file %q not found in cache/plain, skipping.", entry.StrLabelCrc)
+        continue
+      }
+      ins, ok := master.MasterMap[entry.StrLabelCrc]
+      if !ok {
+        rich.Error("Database %q does not exist. Perhaps `master.MasterMap` needs update.", entry.StrLabelCrc)
+        errCount++
+        continue
+      }
+      rows, err := master.Parse(dbFile, entry.StrLabelCrc, &ins)
+      if err != nil {
+        rich.Error("An error occurred when parsing database.")
+        rich.Error(err.Error())
+        continue
+      }
+      utils.WriteToYamlFile(rows, dbSaveDir+"/"+reflect.TypeOf(ins).Name()+".yaml")
+    }
+    
+    if errCount > 0 {
+      rich.Error("%d Error(s) occurred during parsing, please check the log.", errCount)
+    }
+    rich.Info("Masterdata generation completed.")
     return
   }
 
