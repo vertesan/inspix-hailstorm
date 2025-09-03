@@ -6,6 +6,7 @@ import (
   "fmt"
   "net/http"
   "os"
+  "path"
   "sync"
   "time"
 
@@ -70,7 +71,7 @@ func DownloadManifestSync(realName string, saveDir string) {
   rich.Info("Manifest is successfully downloaded.")
 }
 
-func DownloadAssetsAsync(catalog *manifest.Catalog, downloadDir string) {
+func DownloadAssetsAsync(catalog *manifest.Catalog, downloadDir string, keepPath *bool) {
   sem := semaphore.NewWeighted(MAX_CONCURRENCY)
   dlAmount := len(catalog.Entries)
   counter := &SafeCounter{}
@@ -85,10 +86,23 @@ func DownloadAssetsAsync(catalog *manifest.Catalog, downloadDir string) {
     //   rich.Info("(%d/%d) File %q already exists, skip downloading.", counter.Value(), dlAmount, entry.RealName)
     //   continue
     // }
+    saveToDir := downloadDir
+    if *keepPath {
+      var resType string
+      if entry.ResourceType <= 1 {
+        resType = "android"
+      } else {
+        resType = "raw"
+      }
+      saveToDir = path.Join(downloadDir, resType, entry.RealName[:2])
+      if err := os.MkdirAll(saveToDir, 0755); err != nil {
+        panic(err)
+      }
+    }
     if err := sem.Acquire(ctx, 1); err != nil {
       panic(err)
     }
-    go downloadOne(&entry, downloadDir, assetHeader, sem, counter, dlAmount)
+    go downloadOne(&entry, saveToDir, assetHeader, sem, counter, dlAmount)
   }
 
   // wait all concurrencies completed

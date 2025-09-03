@@ -72,6 +72,7 @@ func main() {
   fDbOnly := flag.Bool("dbonly", false, "Only download and decrypt DB files, put assets aside.")
   fForce := flag.Bool("force", false, "Ignore current cached version and update caches.")
   fKeepRaw := flag.Bool("keepraw", false, "Do not delete encrypted raw asset files after decrypting.")
+  fKeepPath := flag.Bool("keep-path", false, "Imitate url download path on file system for assets.")
   flag.Parse()
 
   if *fAnalyze {
@@ -163,7 +164,7 @@ func main() {
   }
 
   // download all assets
-  network.DownloadAssetsAsync(catalog, assetsSaveDir)
+  network.DownloadAssetsAsync(catalog, assetsSaveDir, fKeepPath)
 
   // decrypt all assets
   manifest.DecryptAllAssets(catalog, decrpytedAssetsSaveDir, assetsSaveDir)
