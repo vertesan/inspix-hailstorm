@@ -25,6 +25,11 @@ type AdvDatas struct {
   StartTime time.Time `yaml:"StartTime"`
   EndTime time.Time `yaml:"EndTime"`
   IsPeriod int `yaml:"IsPeriod"`
+  AdvScreenMode int `yaml:"AdvScreenMode"`
+  AdvUnlockItemId int `yaml:"AdvUnlockItemId"`
+  AdvUnlockItemNum int `yaml:"AdvUnlockItemNum"`
+  AdvUnlockConditionValue int `yaml:"AdvUnlockConditionValue"`
+  IsPersistentReward int `yaml:"IsPersistentReward"`
 }
 
 type AdvSeries struct {
@@ -36,6 +41,9 @@ type AdvSeries struct {
   EndTime time.Time `yaml:"EndTime"`
   FiscalYearDisplay int `yaml:"FiscalYearDisplay"`
   AdvAlbumId int64 `yaml:"AdvAlbumId"`
+  IsBadgeDisplayType int `yaml:"IsBadgeDisplayType"`
+  MonthText string `yaml:"MonthText"`
+  YearText string `yaml:"YearText"`
 }
 
 type AdvStoryDigestMovies struct {
@@ -193,6 +201,8 @@ type CardRarities struct {
   Evolution2_MaxLevel int `yaml:"Evolution2_MaxLevel"`
   Evolution3_MaxLevel int `yaml:"Evolution3_MaxLevel"`
   Evolution4_MaxLevel int `yaml:"Evolution4_MaxLevel"`
+  SortOrderId int `yaml:"SortOrderId"`
+  FilterOrderId int `yaml:"FilterOrderId"`
 }
 
 type CardSeries struct {
@@ -215,6 +225,7 @@ type CardSeries struct {
   Evolution4FanLvPt int `yaml:"Evolution4FanLvPt"`
   Evolution3RequiredFanLv int `yaml:"Evolution3RequiredFanLv"`
   Evolution4RequiredFanLv int `yaml:"Evolution4RequiredFanLv"`
+  StyleSettingType int `yaml:"StyleSettingType"`
 }
 
 type CardSkillEffectDetailParams struct {
@@ -263,6 +274,7 @@ type CardSkillSeries struct {
   Name string `yaml:"Name"`
   SkillIcon int `yaml:"SkillIcon"`
   SkillMainEffect int `yaml:"SkillMainEffect"`
+  IsExSpecialAppeal int `yaml:"IsExSpecialAppeal"`
 }
 
 type CardSkills struct {
@@ -703,6 +715,14 @@ type FlowerStandTypes struct {
   Name string `yaml:"Name"`
 }
 
+type ForbiddenCards struct {
+  Id int `yaml:"Id"`
+  ConditionType int `yaml:"ConditionType"`
+  ConditionValue int `yaml:"ConditionValue"`
+  TargetType int `yaml:"TargetType"`
+  TargetValue int `yaml:"TargetValue"`
+}
+
 type GachaCampaigns struct {
   Id int `yaml:"Id"`
   CampaignName string `yaml:"CampaignName"`
@@ -758,6 +778,8 @@ type Generations struct {
   Name string `yaml:"Name"`
   StartTime time.Time `yaml:"StartTime"`
   EndTime time.Time `yaml:"EndTime"`
+  EditOnlyDisplay int `yaml:"EditOnlyDisplay"`
+  OrderId int `yaml:"OrderId"`
 }
 
 type GiftBonusGachas struct {
@@ -1033,6 +1055,7 @@ type GrandPrixDailyPoints struct {
   MaxRank int `yaml:"MaxRank"`
   BasePoint int `yaml:"BasePoint"`
   AdditionalPoint int `yaml:"AdditionalPoint"`
+  CalculationType int `yaml:"CalculationType"`
 }
 
 type GrandPrixPointBonuses struct {
@@ -1133,6 +1156,16 @@ type GrandPrixRewards struct {
   IsDisplay int `yaml:"IsDisplay"`
 }
 
+type GrandPrixRhythmGameSeries struct {
+  Id int `yaml:"Id"`
+  GrandPrixesId int `yaml:"GrandPrixesId"`
+  Name string `yaml:"Name"`
+  Description string `yaml:"Description"`
+  OrderId int `yaml:"OrderId"`
+  QuestMusicsType int `yaml:"QuestMusicsType"`
+  QuestMusicsDetail int `yaml:"QuestMusicsDetail"`
+}
+
 type HelpImages struct {
   Id int `yaml:"Id"`
   Name string `yaml:"Name"`
@@ -1169,6 +1202,22 @@ type ItemExchangeCategoryDatas struct {
   ItemId int `yaml:"ItemId"`
 }
 
+type ItemExchangeCategoryFilter struct {
+  Id int `yaml:"Id"`
+  ItemExchangeCategoryName string `yaml:"ItemExchangeCategoryName"`
+  ItemId int `yaml:"ItemId"`
+  CategoryListId int `yaml:"CategoryListId"`
+  FilterOrderId int `yaml:"FilterOrderId"`
+}
+
+type ItemExchangeCategoryList struct {
+  Id int `yaml:"Id"`
+  CategoryListName string `yaml:"CategoryListName"`
+  ShopListId int `yaml:"ShopListId"`
+  OrderId int `yaml:"OrderId"`
+  FilterType int `yaml:"FilterType"`
+}
+
 type ItemExchanges struct {
   Id int `yaml:"Id"`
   ItemExchangeCategoryId int `yaml:"ItemExchangeCategoryId"`
@@ -1184,6 +1233,13 @@ type ItemExchanges struct {
   OrderId int `yaml:"OrderId"`
   StartTime time.Time `yaml:"StartTime"`
   EndTime time.Time `yaml:"EndTime"`
+  DisplayName string `yaml:"DisplayName"`
+  CategoryListId int `yaml:"CategoryListId"`
+  ItemGroup string `yaml:"ItemGroup"`
+  UnlockConditions int `yaml:"UnlockConditions"`
+  UnlockConditionValue int `yaml:"UnlockConditionValue"`
+  DisplayConditions int `yaml:"DisplayConditions"`
+  DisplayConditionValue int `yaml:"DisplayConditionValue"`
 }
 
 type ItemSources struct {
@@ -1324,6 +1380,16 @@ type MemberVoices struct {
   ReleaseConditionText string `yaml:"ReleaseConditionText"`
 }
 
+type MessageCards struct {
+  Id int `yaml:"Id"`
+  BackGroundColorCode string `yaml:"BackGroundColorCode"`
+  MessageLengthLimit int `yaml:"MessageLengthLimit"`
+  MessageTextColorCode string `yaml:"MessageTextColorCode"`
+  MessageTextSize int `yaml:"MessageTextSize"`
+  IsMessageTextBold int `yaml:"IsMessageTextBold"`
+  NameColorCode string `yaml:"NameColorCode"`
+}
+
 type MissionAchieveRewards struct {
   Id int `yaml:"Id"`
   MissionType int `yaml:"MissionType"`
@@ -1369,6 +1435,7 @@ type MusicDropRewardDetails struct {
   RewardItemId int `yaml:"RewardItemId"`
   RewardNum int `yaml:"RewardNum"`
   Odds int `yaml:"Odds"`
+  IsRestrictAFKDrop int `yaml:"IsRestrictAFKDrop"`
 }
 
 type MusicDropRewards struct {
@@ -1447,6 +1514,7 @@ type MusicMasteryMentalBonuses struct {
   Id int `yaml:"Id"`
   Level int `yaml:"Level"`
   DemandDamagePt int `yaml:"DemandDamagePt"`
+  GainMentalPt int `yaml:"GainMentalPt"`
 }
 
 type MusicMasterySkill struct {
@@ -1458,6 +1526,7 @@ type MusicMasteryVoltageBonuses struct {
   Id int `yaml:"Id"`
   Level int `yaml:"Level"`
   DemandVoltagePt int `yaml:"DemandVoltagePt"`
+  GainVoltagePt int `yaml:"GainVoltagePt"`
 }
 
 type MusicScoreRewardDatas struct {
@@ -1767,6 +1836,14 @@ type RhythmGameClassMissionRewards struct {
   OrderId int `yaml:"OrderId"`
 }
 
+type RhythmGameEventSeries struct {
+  Id int `yaml:"Id"`
+  EventName string `yaml:"EventName"`
+  EventType int `yaml:"EventType"`
+  IsForceStop int `yaml:"IsForceStop"`
+  BgImage int `yaml:"BgImage"`
+}
+
 type RhythmGameHelpImages struct {
   Id int `yaml:"Id"`
   Name string `yaml:"Name"`
@@ -1924,6 +2001,14 @@ type SelectTicketSeries struct {
   IsVisibleEndTime int `yaml:"IsVisibleEndTime"`
 }
 
+type ShopBanners struct {
+  Id int `yaml:"Id"`
+  Url string `yaml:"Url"`
+  Position int `yaml:"Position"`
+  StartTime time.Time `yaml:"StartTime"`
+  EndTime time.Time `yaml:"EndTime"`
+}
+
 type ShopItems struct {
   Id int `yaml:"Id"`
   ShopId int `yaml:"ShopId"`
@@ -1964,6 +2049,22 @@ type SimulationGraphLimit struct {
   UpperLimitBP int `yaml:"UpperLimitBP"`
 }
 
+type SIsCaStoreDatas struct {
+  Id int `yaml:"Id"`
+  DisplayName string `yaml:"DisplayName"`
+  ItemType int `yaml:"ItemType"`
+  ItemId int `yaml:"ItemId"`
+  ItemNum int `yaml:"ItemNum"`
+  Price int `yaml:"Price"`
+  IsPaidSIsCaOnly int `yaml:"IsPaidSIsCaOnly"`
+  LimitNum int `yaml:"LimitNum"`
+  ResetType int `yaml:"ResetType"`
+  OrderId int `yaml:"OrderId"`
+  StartTime time.Time `yaml:"StartTime"`
+  EndTime time.Time `yaml:"EndTime"`
+  IsVisibleEndTime int `yaml:"IsVisibleEndTime"`
+}
+
 type StageScoreMultiplierSettings struct {
   Id int64 `yaml:"Id"`
   MinTargetNum int `yaml:"MinTargetNum"`
@@ -2000,6 +2101,20 @@ type StageSkillSets struct {
   Id int64 `yaml:"Id"`
   StageSkillConditionId int64 `yaml:"StageSkillConditionId"`
   StageSkillEffectId int64 `yaml:"StageSkillEffectId"`
+}
+
+type StageVoltageLevelSettings struct {
+  Id int `yaml:"Id"`
+  VoltageLevel int `yaml:"VoltageLevel"`
+  MinHeartRank int `yaml:"MinHeartRank"`
+  MaxHeartRank int `yaml:"MaxHeartRank"`
+  ScoreMultiplier int64 `yaml:"ScoreMultiplier"`
+}
+
+type StageVoltageLevelThresholds struct {
+  Id int `yaml:"Id"`
+  VoltageLevel int `yaml:"VoltageLevel"`
+  RequiredVoltagePoint int `yaml:"RequiredVoltagePoint"`
 }
 
 type Stamps struct {
