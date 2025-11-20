@@ -84,6 +84,42 @@ type BirthdayRareBonuses struct {
   LoveBonus int `yaml:"LoveBonus"`
 }
 
+type BoxDatas struct {
+  Id int `yaml:"Id"`
+  BoxEventSeriesId int `yaml:"BoxEventSeriesId"`
+  Name string `yaml:"Name"`
+  Rarity int `yaml:"Rarity"`
+  Odds int `yaml:"Odds"`
+  AddBoxProgressValue int `yaml:"AddBoxProgressValue"`
+  IsRestrictView int `yaml:"IsRestrictView"`
+}
+
+type BoxEventSeries struct {
+  Id int `yaml:"Id"`
+  EventName string `yaml:"EventName"`
+  BoxDropOdds int `yaml:"BoxDropOdds"`
+  BoxDropLimit int `yaml:"BoxDropLimit"`
+  BoxDropLimitResetType int `yaml:"BoxDropLimitResetType"`
+  SpecialRewardCountTargetBoxDatasId string `yaml:"SpecialRewardCountTargetBoxDatasId"`
+  AddBoxProgressCount int `yaml:"AddBoxProgressCount"`
+  AddBoxDatasId int `yaml:"AddBoxDatasId"`
+  IsRewardViewType int `yaml:"IsRewardViewType"`
+  StartTime time.Time `yaml:"StartTime"`
+  EndTime time.Time `yaml:"EndTime"`
+}
+
+type BoxItemDatas struct {
+  Id int `yaml:"Id"`
+  BoxDatasId int `yaml:"BoxDatasId"`
+  ItemType int `yaml:"ItemType"`
+  ItemId int `yaml:"ItemId"`
+  ItemNum int `yaml:"ItemNum"`
+  RewardLimitNum int `yaml:"RewardLimitNum"`
+  Odds int `yaml:"Odds"`
+  OrderId int `yaml:"OrderId"`
+  IsDisplayIconId int `yaml:"IsDisplayIconId"`
+}
+
 type CampaignAddRewardSeries struct {
   Id int `yaml:"Id"`
   AddRewardOddsId_1 int64 `yaml:"AddRewardOddsId_1"`
@@ -740,6 +776,22 @@ type GachaCampaigns struct {
   MiniBannerPopId int `yaml:"MiniBannerPopId"`
 }
 
+type GachaPrizeDatas struct {
+  Id int64 `yaml:"Id"`
+  GachaPrizeId int64 `yaml:"GachaPrizeId"`
+  ItemType int `yaml:"ItemType"`
+  ItemId int `yaml:"ItemId"`
+  ItemNum int `yaml:"ItemNum"`
+  OrderId int `yaml:"OrderId"`
+}
+
+type GachaPrizes struct {
+  Id int64 `yaml:"Id"`
+  GachaSeriesId int `yaml:"GachaSeriesId"`
+  GachaPlayCount int `yaml:"GachaPlayCount"`
+  OrderId int `yaml:"OrderId"`
+}
+
 type GachaSeries struct {
   Id int `yaml:"Id"`
   GachaSeriesName string `yaml:"GachaSeriesName"`
@@ -771,6 +823,7 @@ type GachaSeries struct {
   GachaTimeLimitType int `yaml:"GachaTimeLimitType"`
   AvailableTime int `yaml:"AvailableTime"`
   GachaStartBgm int `yaml:"GachaStartBgm"`
+  IsGachaPrize int `yaml:"IsGachaPrize"`
 }
 
 type Generations struct {
@@ -896,6 +949,48 @@ type GradeChalSeason struct {
   BgImageId int `yaml:"BgImageId"`
   StartTime time.Time `yaml:"StartTime"`
   EndTime time.Time `yaml:"EndTime"`
+  IsRankingPrize int `yaml:"IsRankingPrize"`
+}
+
+type GradeChalStageRankingRewardData struct {
+  Id int64 `yaml:"Id"`
+  GradeChalStageRankingRewardId int64 `yaml:"GradeChalStageRankingRewardId"`
+  RewardType int `yaml:"RewardType"`
+  RewardItemId int `yaml:"RewardItemId"`
+  RewardNum int `yaml:"RewardNum"`
+  OrderId int `yaml:"OrderId"`
+  IsUsePresentBox int `yaml:"IsUsePresentBox"`
+  LifeTimeDay int `yaml:"LifeTimeDay"`
+  RewardTextId int `yaml:"RewardTextId"`
+}
+
+type GradeChalStageRankingRewards struct {
+  Id int64 `yaml:"Id"`
+  GradeChalQuestStagesId int `yaml:"GradeChalQuestStagesId"`
+  GradeChalSeasonId int `yaml:"GradeChalSeasonId"`
+  MinRank int `yaml:"MinRank"`
+  MaxRank int `yaml:"MaxRank"`
+  OrderId int `yaml:"OrderId"`
+}
+
+type GradeChalTotalRankingRewardData struct {
+  Id int64 `yaml:"Id"`
+  GradeChalTotalRankingRewardId int `yaml:"GradeChalTotalRankingRewardId"`
+  RewardType int `yaml:"RewardType"`
+  RewardItemId int `yaml:"RewardItemId"`
+  RewardNum int `yaml:"RewardNum"`
+  OrderId int `yaml:"OrderId"`
+  IsUsePresentBox int `yaml:"IsUsePresentBox"`
+  LifeTimeDay int `yaml:"LifeTimeDay"`
+  RewardTextId int `yaml:"RewardTextId"`
+}
+
+type GradeChalTotalRankingRewards struct {
+  Id int `yaml:"Id"`
+  GradeChalSeasonId int `yaml:"GradeChalSeasonId"`
+  MinRank int `yaml:"MinRank"`
+  MaxRank int `yaml:"MaxRank"`
+  OrderId int `yaml:"OrderId"`
 }
 
 type GradeChalTotalScoreRewardDatas struct {
@@ -1679,6 +1774,8 @@ type RaidEvents struct {
   InfoEndTime time.Time `yaml:"InfoEndTime"`
   StartTime time.Time `yaml:"StartTime"`
   EndTime time.Time `yaml:"EndTime"`
+  RaidRewardTargetType int `yaml:"RaidRewardTargetType"`
+  RaidUnitName string `yaml:"RaidUnitName"`
 }
 
 type RaidQuestDropRateUp struct {
@@ -1769,6 +1866,7 @@ type RaidRewards struct {
   RaidEventId int `yaml:"RaidEventId"`
   RewardType int `yaml:"RewardType"`
   RequirePointAmount int64 `yaml:"RequirePointAmount"`
+  QuestSeriesId int `yaml:"QuestSeriesId"`
 }
 
 type RaidTopProgressImage struct {
@@ -2065,6 +2163,27 @@ type SIsCaStoreDatas struct {
   IsVisibleEndTime int `yaml:"IsVisibleEndTime"`
 }
 
+type SpecialappealTokenCardSets struct {
+  Id int `yaml:"Id"`
+  SpecialAppealTokenSetId int `yaml:"SpecialAppealTokenSetId"`
+  SpecialAppealTokenResourceId int `yaml:"SpecialAppealTokenResourceId"`
+  TargetParameter int `yaml:"TargetParameter"`
+  SkillSeriesId int `yaml:"SkillSeriesId"`
+  Mood int `yaml:"Mood"`
+  Style int `yaml:"Style"`
+}
+
+type SpecialRewardProgressDatas struct {
+  Id int `yaml:"Id"`
+  BoxEventSeriesId int `yaml:"BoxEventSeriesId"`
+  SpecialRewardItemType int `yaml:"SpecialRewardItemType"`
+  SpecialRewardItemId int `yaml:"SpecialRewardItemId"`
+  SpecialRewardItemIdNum int `yaml:"SpecialRewardItemIdNum"`
+  SpecialRewardProgressCount int `yaml:"SpecialRewardProgressCount"`
+  OrderId int `yaml:"OrderId"`
+  IsLoop int `yaml:"IsLoop"`
+}
+
 type StageScoreMultiplierSettings struct {
   Id int64 `yaml:"Id"`
   MinTargetNum int `yaml:"MinTargetNum"`
@@ -2217,6 +2336,7 @@ type StyleMovies struct {
   MovieType int `yaml:"MovieType"`
   Name string `yaml:"Name"`
   ReleaseConditionText string `yaml:"ReleaseConditionText"`
+  OverrideBgm int `yaml:"OverrideBgm"`
 }
 
 type StyleVoices struct {
