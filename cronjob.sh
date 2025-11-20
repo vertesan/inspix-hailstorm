@@ -39,7 +39,7 @@ fi
 if [ -f "$UPDATE_FLAG" ]; then 
   if [ ! -d "$REPO_NAME" ]; then
     echo "Cloning from remote repository..."
-    git clone $INS_DIFF_REPO_URI $REPO_NAME
+    GIT_SSH_COMMAND="ssh -o IdentitiesOnly=yes -i ${INS_SSH_KEY_PATH}" git clone $INS_DIFF_REPO_URI $REPO_NAME
   fi
 
   git -C $REPO_NAME config user.name $INS_REPO_USER_NAME
