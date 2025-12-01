@@ -5,6 +5,7 @@ import (
   "fmt"
   "os"
   "reflect"
+  "regexp"
 
   "vertesan/hailstorm/analyser"
   "vertesan/hailstorm/manifest"
@@ -66,6 +67,23 @@ func filterDb(catalog *manifest.Catalog) {
   catalog.Entries = s
 }
 
+// Filter out assets that match regex patterns.
+func filterByRegex(catalog *manifest.Catalog, pattern string) {
+  re, err := regexp.Compile(pattern)
+  if err != nil {
+    rich.Error("Invalid regex pattern: %v", err)
+    return
+  }
+  
+  s := []manifest.Entry{}
+  for _, entry := range catalog.Entries {
+    if re.MatchString(entry.StrLabelCrc) {
+      s = append(s, entry)
+    }
+  }
+  catalog.Entries = s
+}
+
 func main() {
   // parse arguments
   fAnalyze := flag.Bool("analyze", false, "Do code analysis and exist.")
@@ -75,6 +93,7 @@ func main() {
   fKeepPath := flag.Bool("keep-path", false, "Imitate url download path on file system for assets.")
   fClientVersion := flag.String("client-version", "", "Specify client version manually.")
   fResInfo := flag.String("res-info", "", "Specify resource info manually.")
+  fFilterRegex := flag.String("filter-regex", "", "Only download assets that match the regex pattern. eg. --filter-regex=\"bgm_.*\"")
   flag.Parse()
 
   if *fAnalyze {
@@ -163,6 +182,10 @@ func main() {
 
   if *fDbOnly {
     filterDb(catalog)
+  }
+
+  if *fFilterRegex != "" {
+    filterByRegex(catalog, *fFilterRegex)
   }
 
   if len(catalog.Entries) == 0 {
