@@ -67,7 +67,7 @@ func filterDb(catalog *manifest.Catalog) {
   catalog.Entries = s
 }
 
-// Filter out assets that match regex patterns.
+// Filter out assets that don't match regex patterns.
 func filterByRegex(catalog *manifest.Catalog, pattern string) {
   re, err := regexp.Compile(pattern)
   if err != nil {
@@ -86,7 +86,7 @@ func filterByRegex(catalog *manifest.Catalog, pattern string) {
 
 func main() {
   // parse arguments
-  fAnalyze := flag.Bool("analyze", false, "Do code analysis and exist.")
+  fAnalyze := flag.Bool("analyze", false, "Do code analysis and exit.")
   fDbOnly := flag.Bool("dbonly", false, "Only download and decrypt DB files, put assets aside.")
   fForce := flag.Bool("force", false, "Ignore current cached version and update caches.")
   fKeepRaw := flag.Bool("keepraw", false, "Do not delete encrypted raw asset files after decrypting.")
