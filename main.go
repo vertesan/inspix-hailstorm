@@ -73,6 +73,8 @@ func main() {
   fForce := flag.Bool("force", false, "Ignore current cached version and update caches.")
   fKeepRaw := flag.Bool("keepraw", false, "Do not delete encrypted raw asset files after decrypting.")
   fKeepPath := flag.Bool("keep-path", false, "Imitate url download path on file system for assets.")
+  fClientVersion := flag.String("client-version", "", "Specify client version manually.")
+  fResInfo := flag.String("res-info", "", "Specify resource info manually.")
   flag.Parse()
 
   if *fAnalyze {
@@ -85,12 +87,17 @@ func main() {
       panic(err)
     }
   }
-
-  clientVersion, err := network.GetPlayVersion()
-  if err != nil {
-    panic(err)
+  clientVersion := *fClientVersion
+  resInfo := *fResInfo
+  if clientVersion == "" {
+    var err error
+    if clientVersion, err = network.GetPlayVersion(); err != nil {
+      panic(err)
+    }
   }
-  resInfo := network.Login(clientVersion)
+  if resInfo == "" {
+  	resInfo = network.Login(clientVersion)
+  }
 
   currentVer, err := os.ReadFile(catalogVersionFile)
   if err != nil {
