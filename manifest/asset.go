@@ -35,7 +35,7 @@ type Asset struct {
   // Md5           [16]byte
 }
 
-func DecryptAllAssets(catalog *Catalog, dstDir string, srcDir string) {
+func DecryptAllAssets(catalog *Catalog, dstDir string, srcDir string, progress *Progress, progressPath string) {
   counter := 0
   amount := len(catalog.Entries)
 
@@ -45,6 +45,12 @@ func DecryptAllAssets(catalog *Catalog, dstDir string, srcDir string) {
   }
   for _, entry := range catalog.Entries {
     counter++
+    if progress != nil {
+      status := progress.GetStatus(entry.RealName)
+      if status == StatusDecrypted || status == StatusFailed {
+          continue
+      }
+    }
     var suffix = ""
     if entry.ResourceType == 1 {
       suffix = ".assetbundle"
@@ -100,6 +106,9 @@ func DecryptAllAssets(catalog *Catalog, dstDir string, srcDir string) {
       DecodeAsset(asset, plainBuf, rawBuf)
     }
     plainBuf.Flush()
+    if progress != nil {
+      progress.UpdateStatus(entry.RealName, StatusDecrypted, progressPath)
+    }
     rich.Info("(%d/%d) Asset file %q(%v) was successfully processed.", counter, amount, entry.StrLabelCrc, entry.RealName)
     rawFile.Close()
     plainFile.Close()

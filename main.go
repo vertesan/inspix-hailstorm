@@ -26,6 +26,7 @@ var (
   catalogJsonFilePrev = "cache/catalog_prev.json"
   catalogJsonDiffFile = "cache/catalog_diff.json"
   updatedFlagFile     = "cache/updated"
+  progressFile        = "cache/progress.json"
 )
 
 func doAnalyze() {
@@ -96,6 +97,7 @@ func main() {
   fClientVersion := flag.String("client-version", "", "Specify client version manually.")
   fResInfo := flag.String("res-info", "", "Specify resource info manually.")
   fFilterRegex := flag.String("filter-regex", "", "Only download assets that match the regex pattern. eg. --filter-regex=\"bgm_.*\"")
+  fFlushInterval := flag.Int("flush-interval", 50, "Number of files processed before saving progress to disk.")
   flag.Parse()
 
   if *fAnalyze {
@@ -121,7 +123,7 @@ func main() {
     }
     
     // Only decrypt existing assets
-    manifest.DecryptAllAssets(catalog, decrpytedAssetsSaveDir, assetsSaveDir)
+    manifest.DecryptAllAssets(catalog, decrpytedAssetsSaveDir, assetsSaveDir, nil, "")
     
     rich.Info("Conversion completed.")
     return
@@ -208,7 +210,8 @@ func main() {
     }
   }
 
-  if !*fForce && resInfo == string(currentVer) {
+  progress := manifest.LoadProgress(progressFile)
+  if !*fForce && resInfo == string(currentVer) && progress == nil {
     rich.Info("Nothing updated, will be stopping process.")
     return
   }
@@ -259,7 +262,7 @@ func main() {
     Entries: oldEntries,
   }
 
-  if !*fForce {
+  if !*fForce && progress == nil {
     diff(catalog, oldCatalog)
   }
 
@@ -276,11 +279,19 @@ func main() {
     return
   }
 
+  if progress != nil && progress.ResInfo == resInfo {
+    rich.Info("Resuming from previous progress.")
+  } else {
+    progress = manifest.NewProgress(resInfo, catalog, *fFlushInterval)
+    progress.Save(progressFile)
+    rich.Info("Created new progress file.")
+  }
+
   // download all assets
-  network.DownloadAssetsAsync(catalog, assetsSaveDir, fKeepPath)
+  network.DownloadAssetsAsync(catalog, assetsSaveDir, fKeepPath, progress, progressFile)
 
   // decrypt all assets
-  manifest.DecryptAllAssets(catalog, decrpytedAssetsSaveDir, assetsSaveDir)
+  manifest.DecryptAllAssets(catalog, decrpytedAssetsSaveDir, assetsSaveDir, progress, progressFile)
 
   // convert db files to yaml
   if err := os.MkdirAll(dbSaveDir, 0755); err != nil {
@@ -310,6 +321,9 @@ func main() {
     }
     // marshal catalog to a yaml file
     utils.WriteToYamlFile(rows, dbSaveDir+"/"+reflect.TypeOf(ins).Name()+".yaml")
+  }
+  if !progress.Cleanup(progressFile) {
+    rich.Error("Some assets failed to process, please check the log, you can re-run the program to continue.")
   }
   cvf, err := os.Create(catalogVersionFile)
   if err != nil {
