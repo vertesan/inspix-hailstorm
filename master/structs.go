@@ -2101,8 +2101,10 @@ type SelectTicketSeries struct {
 
 type ShopBanners struct {
   Id int `yaml:"Id"`
+  ShopsId int `yaml:"ShopsId"`
   Url string `yaml:"Url"`
   Position int `yaml:"Position"`
+  DisplayType int `yaml:"DisplayType"`
   StartTime time.Time `yaml:"StartTime"`
   EndTime time.Time `yaml:"EndTime"`
 }
@@ -2474,6 +2476,8 @@ type Units struct {
   OrderId int `yaml:"OrderId"`
   StartTime time.Time `yaml:"StartTime"`
   EndTime time.Time `yaml:"EndTime"`
+  IsVisibleRhythmGameMusicFilter int `yaml:"IsVisibleRhythmGameMusicFilter"`
+  IsVisibleRhythmGameCardFilter int `yaml:"IsVisibleRhythmGameCardFilter"`
 }
 
 type LiveCharacters struct {
