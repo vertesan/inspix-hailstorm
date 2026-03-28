@@ -628,6 +628,15 @@ type DreamQuestStages struct {
   Score1 int64 `yaml:"Score1"`
 }
 
+type EffectSticker struct {
+  Id int `yaml:"Id"`
+  Name string `yaml:"Name"`
+  OrderId int `yaml:"OrderId"`
+  BlockCount int `yaml:"BlockCount"`
+  IconColorCode string `yaml:"IconColorCode"`
+  IsRestrictCustom int `yaml:"IsRestrictCustom"`
+}
+
 type EmojiCategory struct {
   Id int `yaml:"Id"`
   Name string `yaml:"Name"`
@@ -1427,6 +1436,7 @@ type LiveStages struct {
   StageSkillEffectId int64 `yaml:"StageSkillEffectId"`
   StageSkillDescription string `yaml:"StageSkillDescription"`
   StageSkillSetIds string `yaml:"StageSkillSetIds"`
+  IsHeartCollectCTAvailable int `yaml:"IsHeartCollectCTAvailable"`
 }
 
 type LoginBonuses struct {
@@ -2099,6 +2109,21 @@ type SelectTicketSeries struct {
   IsVisibleEndTime int `yaml:"IsVisibleEndTime"`
 }
 
+type ShapeStickerColor struct {
+  Id int `yaml:"Id"`
+  EffectColorCode string `yaml:"EffectColorCode"`
+  ViewType int `yaml:"ViewType"`
+  OrderId int `yaml:"OrderId"`
+}
+
+type ShapeSticker struct {
+  Id int `yaml:"Id"`
+  Name string `yaml:"Name"`
+  OrderId int `yaml:"OrderId"`
+  BlockCount int `yaml:"BlockCount"`
+  OutlineGenerateType int `yaml:"OutlineGenerateType"`
+}
+
 type ShopBanners struct {
   Id int `yaml:"Id"`
   ShopsId int `yaml:"ShopsId"`
@@ -2235,7 +2260,7 @@ type StageVoltageLevelSettings struct {
 type StageVoltageLevelThresholds struct {
   Id int `yaml:"Id"`
   VoltageLevel int `yaml:"VoltageLevel"`
-  RequiredVoltagePoint int `yaml:"RequiredVoltagePoint"`
+  RequiredVoltagePoint int64 `yaml:"RequiredVoltagePoint"`
 }
 
 type Stamps struct {
