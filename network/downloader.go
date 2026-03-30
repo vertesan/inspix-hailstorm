@@ -3,6 +3,7 @@ package network
 import (
   "bufio"
   "context"
+  "errors"
   "fmt"
   "net/http"
   "os"
@@ -67,11 +68,13 @@ func DownloadManifestSync(realName string, saveDir string) {
   if err := os.MkdirAll(saveDir, 0755); err != nil {
     panic(err)
   }
-  downloadOne(entry, saveDir, assetHeader, nil, counter, 1)
+  if err := downloadOne(entry, saveDir, assetHeader, nil, counter, 1, nil, ""); err != nil {
+    rich.Panic("Manifest download failed, due to %s", err)
+  }
   rich.Info("Manifest is successfully downloaded.")
 }
 
-func DownloadAssetsAsync(catalog *manifest.Catalog, downloadDir string, keepPath *bool) {
+func DownloadAssetsAsync(catalog *manifest.Catalog, downloadDir string, keepPath *bool, progress *manifest.Progress, progressPath string) {
   sem := semaphore.NewWeighted(MAX_CONCURRENCY)
   dlAmount := len(catalog.Entries)
   counter := &SafeCounter{}
@@ -86,6 +89,14 @@ func DownloadAssetsAsync(catalog *manifest.Catalog, downloadDir string, keepPath
     //   rich.Info("(%d/%d) File %q already exists, skip downloading.", counter.Value(), dlAmount, entry.RealName)
     //   continue
     // }
+    if progress != nil {
+      status := progress.GetStatus(entry.RealName)
+      if status == manifest.StatusDownloaded || status == manifest.StatusDecrypted {
+        counter.Increase()
+        rich.Info("(%d/%d) Skipping already downloaded: %q.", counter.Value(), dlAmount, entry.StrLabelCrc)
+        continue
+      }
+    }
     saveToDir := downloadDir
     if *keepPath {
       var resType string
@@ -102,7 +113,7 @@ func DownloadAssetsAsync(catalog *manifest.Catalog, downloadDir string, keepPath
     if err := sem.Acquire(ctx, 1); err != nil {
       panic(err)
     }
-    go downloadOne(&entry, saveToDir, assetHeader, sem, counter, dlAmount)
+    go downloadOne(&entry, saveToDir, assetHeader, sem, counter, dlAmount, progress, progressPath)
   }
 
   // wait all concurrencies completed
@@ -119,7 +130,9 @@ func downloadOne(
   sem *semaphore.Weighted,
   counter *SafeCounter,
   amount int,
-) {
+  progress *manifest.Progress,
+  progressPath string,
+) error {
   if sem != nil {
     defer sem.Release(1)
   }
@@ -168,12 +181,19 @@ func downloadOne(
     }
 
     counter.Increase()
+    if progress != nil {
+      progress.UpdateStatus(entry.RealName, manifest.StatusDownloaded, progressPath)
+    }
     rich.Info("(%d/%d) Download completed: %q(%v).", counter.Value(), amount, entry.StrLabelCrc, entry.RealName)
     res.Body.Close()
-    return
+    return nil
   }
   // max retry exhausted
-  rich.Panic("Max retries exhausted when downloading %v. Will be stopping process.", request.URL)
+  rich.Error("Max retries exhausted when downloading %v. Will be stopping process.", request.URL)
+  if progress != nil {
+    progress.UpdateStatus(entry.RealName, manifest.StatusFailed, progressPath)
+  }
+  return errors.New("max retries exhausted")
 }
 
 func prepareRequest(entry *manifest.Entry, header http.Header) *http.Request {
