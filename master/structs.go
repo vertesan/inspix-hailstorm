@@ -44,6 +44,7 @@ type AdvSeries struct {
   IsBadgeDisplayType int `yaml:"IsBadgeDisplayType"`
   MonthText string `yaml:"MonthText"`
   YearText string `yaml:"YearText"`
+  StorySegment int `yaml:"StorySegment"`
 }
 
 type AdvStoryDigestMovies struct {
@@ -188,6 +189,7 @@ type CardDatas struct {
   RhythmGameSkillSeriesId int `yaml:"RhythmGameSkillSeriesId"`
   CenterSkillLvUpItemId int `yaml:"CenterSkillLvUpItemId"`
   RhythmGameSkillLvUpItemId int `yaml:"RhythmGameSkillLvUpItemId"`
+  IsParallelCard int `yaml:"IsParallelCard"`
 }
 
 type CardDuetVoice struct {
@@ -262,6 +264,8 @@ type CardSeries struct {
   Evolution3RequiredFanLv int `yaml:"Evolution3RequiredFanLv"`
   Evolution4RequiredFanLv int `yaml:"Evolution4RequiredFanLv"`
   StyleSettingType int `yaml:"StyleSettingType"`
+  StartTime time.Time `yaml:"StartTime"`
+  IsParallelCard int `yaml:"IsParallelCard"`
 }
 
 type CardSkillEffectDetailParams struct {
@@ -409,6 +413,66 @@ type ChallengeModeStages struct {
   ChallengeModeScore int64 `yaml:"ChallengeModeScore"`
 }
 
+type ChapterMissionCategorys struct {
+  Id int `yaml:"Id"`
+  CategoryId int `yaml:"CategoryId"`
+  ChapterMissionCategoryName string `yaml:"ChapterMissionCategoryName"`
+  LimitPoint int `yaml:"LimitPoint"`
+}
+
+type ChapterMissions struct {
+  Id int `yaml:"Id"`
+  Description string `yaml:"Description"`
+  ChapterMissionCategorysId int `yaml:"ChapterMissionCategorysId"`
+  MissionConditionType int `yaml:"MissionConditionType"`
+  MissionConditionNum int `yaml:"MissionConditionNum"`
+  MissionConditionDetail int `yaml:"MissionConditionDetail"`
+  SortOrder int `yaml:"SortOrder"`
+  TransitionContentsId int `yaml:"TransitionContentsId"`
+  RewardSeasonPoint int `yaml:"RewardSeasonPoint"`
+  MissionGroup int `yaml:"MissionGroup"`
+}
+
+type ChapterPointRewardDetails struct {
+  Id int `yaml:"Id"`
+  ChapterPointRewardsId int `yaml:"ChapterPointRewardsId"`
+  RewardType int `yaml:"RewardType"`
+  RewardItemId int `yaml:"RewardItemId"`
+  RewardNum int `yaml:"RewardNum"`
+  LifeTimeDay int `yaml:"LifeTimeDay"`
+  RewardTextId int `yaml:"RewardTextId"`
+}
+
+type ChapterPointRewards struct {
+  Id int `yaml:"Id"`
+  ChapterId int `yaml:"ChapterId"`
+  ChapterPoint int `yaml:"ChapterPoint"`
+}
+
+type ChapterPortalDatas struct {
+  Id int `yaml:"Id"`
+  ChapterId int `yaml:"ChapterId"`
+  FeaturedGachaSeriesId int `yaml:"FeaturedGachaSeriesId"`
+  FeaturedAdvSeriesId int `yaml:"FeaturedAdvSeriesId"`
+  StartTime time.Time `yaml:"StartTime"`
+  EndTime time.Time `yaml:"EndTime"`
+}
+
+type ChapterRanks struct {
+  Id int `yaml:"Id"`
+  ChapterRankName string `yaml:"ChapterRankName"`
+  RequirePoint int `yaml:"RequirePoint"`
+  RewardIconFrame int `yaml:"RewardIconFrame"`
+}
+
+type Chapters struct {
+  Id int `yaml:"Id"`
+  ChapterName string `yaml:"ChapterName"`
+  StartTime time.Time `yaml:"StartTime"`
+  EndTime time.Time `yaml:"EndTime"`
+  MissionGroup int `yaml:"MissionGroup"`
+}
+
 type CharacterFavoriteGifts struct {
   Id int `yaml:"Id"`
   ItemsId int `yaml:"ItemsId"`
@@ -430,6 +494,8 @@ type Characters struct {
   Introduction string `yaml:"Introduction"`
   ShowSeasonFanLvStartTime time.Time `yaml:"ShowSeasonFanLvStartTime"`
   ShowSeasonFanLvEndTime time.Time `yaml:"ShowSeasonFanLvEndTime"`
+  CurrentStudentOverrideStartTime time.Time `yaml:"CurrentStudentOverrideStartTime"`
+  CurrentStudentOverrideEndTime time.Time `yaml:"CurrentStudentOverrideEndTime"`
   IsExistFanLv int `yaml:"IsExistFanLv"`
   StyleType int `yaml:"StyleType"`
   PrintFilterType int `yaml:"PrintFilterType"`
@@ -438,6 +504,42 @@ type Characters struct {
   NameDisplayType int `yaml:"NameDisplayType"`
   DisplayGeneration string `yaml:"DisplayGeneration"`
   GraduateIntroduction string `yaml:"GraduateIntroduction"`
+  ContainedCharacters string `yaml:"ContainedCharacters"`
+  MemberProfileCategoryId int `yaml:"MemberProfileCategoryId"`
+  MemberProfileOrder int `yaml:"MemberProfileOrder"`
+  IsShowOnlyCardList int `yaml:"IsShowOnlyCardList"`
+}
+
+type CheerMembers struct {
+  Id int `yaml:"Id"`
+  CharactersId int `yaml:"CharactersId"`
+  Order int `yaml:"Order"`
+  StartTime time.Time `yaml:"StartTime"`
+  EndTime time.Time `yaml:"EndTime"`
+}
+
+type CheerRankings struct {
+  Id int `yaml:"Id"`
+  CheerMembersId int `yaml:"CheerMembersId"`
+  StartTime time.Time `yaml:"StartTime"`
+  EndTime time.Time `yaml:"EndTime"`
+}
+
+type CheerRewardDatas struct {
+  Id int64 `yaml:"Id"`
+  CheerRewardsId int64 `yaml:"CheerRewardsId"`
+  RewardType int `yaml:"RewardType"`
+  RewardItemId int `yaml:"RewardItemId"`
+  RewardNum int `yaml:"RewardNum"`
+  LifeTimeDay int `yaml:"LifeTimeDay"`
+  RewardTextId int `yaml:"RewardTextId"`
+}
+
+type CheerRewards struct {
+  Id int64 `yaml:"Id"`
+  CheerRankingsId int `yaml:"CheerRankingsId"`
+  MinTargetNum int `yaml:"MinTargetNum"`
+  MaxTargetNum int `yaml:"MaxTargetNum"`
 }
 
 type Comics struct {
@@ -1286,6 +1388,15 @@ type HomeBgms struct {
   EndTime time.Time `yaml:"EndTime"`
 }
 
+type IconFrame struct {
+  Id int `yaml:"Id"`
+  Name string `yaml:"Name"`
+  ConditionText string `yaml:"ConditionText"`
+  EndTimeType int `yaml:"EndTimeType"`
+  EndTime time.Time `yaml:"EndTime"`
+  IsVisibleDisplay int `yaml:"IsVisibleDisplay"`
+}
+
 type IngameMissionSkillDetails struct {
   Id int64 `yaml:"Id"`
   GroupId int64 `yaml:"GroupId"`
@@ -1298,6 +1409,15 @@ type IngameMissionSkillDetails struct {
   AddScore int64 `yaml:"AddScore"`
   Probability int `yaml:"Probability"`
   MissionText string `yaml:"MissionText"`
+}
+
+type ItemConversions struct {
+  Id int `yaml:"Id"`
+  BeforeConversionItemType int64 `yaml:"BeforeConversionItemType"`
+  BeforeConversionItemId int `yaml:"BeforeConversionItemId"`
+  AfterConversionItemType int `yaml:"AfterConversionItemType"`
+  AfterConversionItemId int `yaml:"AfterConversionItemId"`
+  AfterConversionItemNum int `yaml:"AfterConversionItemNum"`
 }
 
 type ItemExchangeCategoryDatas struct {
@@ -1414,15 +1534,6 @@ type LimitBreakMaterialRate struct {
   LimitBreakMaterialQuantity int `yaml:"LimitBreakMaterialQuantity"`
 }
 
-type LiveChannels struct {
-  Id int `yaml:"Id"`
-  Name string `yaml:"Name"`
-  Description string `yaml:"Description"`
-  OrderId int `yaml:"OrderId"`
-  StartTime time.Time `yaml:"StartTime"`
-  EndTime time.Time `yaml:"EndTime"`
-}
-
 type LiveStages struct {
   Id int `yaml:"Id"`
   Name string `yaml:"Name"`
@@ -1474,6 +1585,23 @@ type MemberMovies struct {
   Name string `yaml:"Name"`
   Priority int `yaml:"Priority"`
   ReleaseConditionText string `yaml:"ReleaseConditionText"`
+}
+
+type MemberProfileCategory struct {
+  Id int `yaml:"Id"`
+  CategoryName string `yaml:"CategoryName"`
+  OrderId int `yaml:"OrderId"`
+}
+
+type MemberProfiles struct {
+  Id int `yaml:"Id"`
+  CharactersId int `yaml:"CharactersId"`
+  OrderId int `yaml:"OrderId"`
+  DisplayGeneration string `yaml:"DisplayGeneration"`
+  BackgroundImageId int `yaml:"BackgroundImageId"`
+  MovieID int `yaml:"MovieID"`
+  Introduction string `yaml:"Introduction"`
+  GraduateIntroduction string `yaml:"GraduateIntroduction"`
 }
 
 type MemberVoices struct {
@@ -1712,6 +1840,13 @@ type Musics struct {
   VideoBgId int `yaml:"VideoBgId"`
   SongType int `yaml:"SongType"`
   MusicScoreReleaseTime time.Time `yaml:"MusicScoreReleaseTime"`
+}
+
+type ParallelCard struct {
+  Id int `yaml:"Id"`
+  BaseCardSeriesId int `yaml:"BaseCardSeriesId"`
+  ParallelCardSeriesId int `yaml:"ParallelCardSeriesId"`
+  Name string `yaml:"Name"`
 }
 
 type PetalCoinExchangeRate struct {
@@ -2018,6 +2153,14 @@ type RhythmGameTotalMissions struct {
   ReleaseEndTime time.Time `yaml:"ReleaseEndTime"`
 }
 
+type SDDisplaySetting struct {
+  Id int `yaml:"Id"`
+  CharactersId int `yaml:"CharactersId"`
+  AppearanceType int `yaml:"AppearanceType"`
+  StartTime time.Time `yaml:"StartTime"`
+  EndTime time.Time `yaml:"EndTime"`
+}
+
 type SeasonFanLevels struct {
   Id int `yaml:"Id"`
   SeasonsId int `yaml:"SeasonsId"`
@@ -2035,6 +2178,7 @@ type SeasonGrade struct {
   DisplayStartTime time.Time `yaml:"DisplayStartTime"`
   DisplayEndTime time.Time `yaml:"DisplayEndTime"`
   TermTitle string `yaml:"TermTitle"`
+  IsSeasonGrade int `yaml:"IsSeasonGrade"`
 }
 
 type SeasonGradeRewardDatas struct {
@@ -2058,6 +2202,7 @@ type Seasons struct {
   Name string `yaml:"Name"`
   StartTime time.Time `yaml:"StartTime"`
   EndTime time.Time `yaml:"EndTime"`
+  IsSeasonFanLv int `yaml:"IsSeasonFanLv"`
 }
 
 type SectionSkillEffectDetails struct {
