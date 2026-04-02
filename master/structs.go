@@ -494,8 +494,8 @@ type Characters struct {
   Introduction string `yaml:"Introduction"`
   ShowSeasonFanLvStartTime time.Time `yaml:"ShowSeasonFanLvStartTime"`
   ShowSeasonFanLvEndTime time.Time `yaml:"ShowSeasonFanLvEndTime"`
-  CurrentStudentOverrideStartTime time.Time `yaml:"CurrentStudentOverrideStartTime"`
-  CurrentStudentOverrideEndTime time.Time `yaml:"CurrentStudentOverrideEndTime"`
+  // CurrentStudentOverrideStartTime time.Time `yaml:"CurrentStudentOverrideStartTime"`
+  // CurrentStudentOverrideEndTime time.Time `yaml:"CurrentStudentOverrideEndTime"`
   IsExistFanLv int `yaml:"IsExistFanLv"`
   StyleType int `yaml:"StyleType"`
   PrintFilterType int `yaml:"PrintFilterType"`
