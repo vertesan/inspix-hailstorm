@@ -71,3 +71,14 @@ func WriteToYamlFile(instance any, dst string) {
   rich.Info("Writing yaml file '%s' done.", yamlDbFile.Name())
   yamlDbFile.Close()
 }
+
+func ReadFromYamlFile(src string, v any) error {
+  yBytes, err := os.ReadFile(src)
+  if err != nil {
+    return err
+  }
+  if err := yaml.Unmarshal(yBytes, v); err != nil {
+    return err
+  }
+  return nil
+}

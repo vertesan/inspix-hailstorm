@@ -12,6 +12,7 @@ import (
   "vertesan/hailstorm/master"
   "vertesan/hailstorm/network"
   "vertesan/hailstorm/rich"
+  "vertesan/hailstorm/story"
   "vertesan/hailstorm/utils"
 )
 
@@ -96,10 +97,16 @@ func main() {
   fClientVersion := flag.String("client-version", "", "Specify client version manually.")
   fResInfo := flag.String("res-info", "", "Specify resource info manually.")
   fFilterRegex := flag.String("filter-regex", "", "Only download assets that match the regex pattern. eg. --filter-regex=\"bgm_.*\"")
+  fStory := flag.Bool("story", false, "Parse story text.")
   flag.Parse()
 
   if *fAnalyze {
     doAnalyze()
+    return
+  }
+
+  if *fStory {
+    story.ParseStoryText()
     return
   }
 
